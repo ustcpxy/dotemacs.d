@@ -1,0 +1,9 @@
+* personal emacs config
+It is highly inspired by [[https://github.com/hlissner/doom-emacs][doom-emacs]].
+
+I have migrated from [[https://github.com/syl20bnr/spacemacs][spacemacs]] to =doom-eamcs= for two years. but now it is getting swollen too.
+
+so it's time to change.
+I'd like to build a personal emacs config from zero.
+
+happy hacking.
