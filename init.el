@@ -14,5 +14,6 @@
 ;; Load configs for specific features and modes
 
 (require 'init-selectrum)
+(require 'init-org-roam)
 
 (provide 'init)
