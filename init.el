@@ -25,10 +25,14 @@
 (use-package general
   :after evil
   :config
+  (general-evil-setup t)
   (general-create-definer my/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
+
+  (general-create-definer dw/ctrl-c-keys
+    :prefix "C-c")
 
   (my/leader-keys
     "t"  '(:ignore t :which-key "toggles")
@@ -59,11 +63,17 @@
   (evil-collection-init))
 
 ;;; Load configs for specific features and modes
+(use-package avy
+  :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+
+(my/leader-keys
+  "j"   '(:ignore t :which-key "jump")
+  "jj"  '(avy-goto-char :which-key "jump to char")
+  "jw"  '(avy-goto-word-0 :which-key "jump to word")
+  "jl"  '(avy-goto-line :which-key "jump to line"))
 
 
-
-
-
+(require 'init-selectrum)
 
 
 
