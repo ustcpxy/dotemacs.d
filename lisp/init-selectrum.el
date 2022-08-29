@@ -64,16 +64,6 @@
   (when (fboundp 'projectile-project-root)
     (projectile-project-root)))
 
-(use-package consult
-  :demand t
-  :bind (("C-s" . consult-line)
-         ("C-M-l" . consult-imenu)
-         ("C-M-j" . consult-buffer))
-  :custom
-  (consult-project-root-function #'my/get-project-root)
-  (completion-in-region-function #'consult-completion-in-region)
-  :config
-  )
 
 ;;; Completion Annotations with Marginalia
 (use-package marginalia
