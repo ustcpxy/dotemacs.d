@@ -16,6 +16,7 @@
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 (require 'init-ui)
+(require 'init-completion)
 
 ;;; Keybinding Configuration
 ;; Make ESC quit prompts
