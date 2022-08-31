@@ -6,8 +6,7 @@
 ;; Bootstrap config
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-;; use straight instead of the built-in package manager
-(require 'init-straight)
+(require 'init-package)
 
 ;;; keep ~.emacs.d~ folders clean
 (use-package no-littering)

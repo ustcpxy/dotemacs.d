@@ -46,6 +46,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(require 'use-package)
+;; 让 use-package 永远按需安装软件包
+(setq use-package-always-ensure t)
+
 (provide 'init-package)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
