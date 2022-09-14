@@ -32,30 +32,6 @@
 
 (require 'init-selectrum)
 
-(use-package projectile
-  :commands (projectile-project-root
-             projectile-project-name
-             projectile-project-p
-             projectile-locate-dominating-file)
-  :init
-  (setq projectile-auto-discover nil
-        projectile-enable-caching nil
-        projectile-globally-ignored-files '(".DS_Store" "TAGS")
-        projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
-        projectile-kill-buffers-filter 'kill-only-files
-        projectile-completion-system 'default
-        )
-
-  (global-set-key [remap evil-jump-to-tag] #'projectile-find-tag)
-  (global-set-key [remap find-tag]         #'projectile-find-tag)
-
-  :general
-  (my-leader-def
-   "p" '(:keymap projectile-command-map :wk "project")
-  )
-  :config
-  (projectile-mode +1)
-  )
 
 ;;; recentf mode
 (recentf-mode 1)
@@ -198,23 +174,6 @@
   :bind (:map flycheck-command-map
               ("!" . consult-flycheck)))
 
-(use-package helpful
-  ;; a better *help* buffer
-  :commands helpful--read-symbol
-  :init
-  ;; Make `apropos' et co search more extensively. They're more useful this way.
-  (setq apropos-do-all t)
-
-  (global-set-key [remap describe-function] #'helpful-callable)
-  (global-set-key [remap describe-command]  #'helpful-command)
-  (global-set-key [remap describe-variable] #'helpful-variable)
-  (global-set-key [remap describe-key]      #'helpful-key)
-  (global-set-key [remap describe-symbol]   #'helpful-symbol)
-
-  :general
-  (my-leader-def
-  "h" '(:keymap help-map :wk "help"))
-  )
 
 (require 'init-keybindings)
 
