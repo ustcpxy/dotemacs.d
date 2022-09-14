@@ -18,44 +18,13 @@
 (require 'init-ui)
 (require 'init-completion)
 
+;; Core
+(require 'init-evil)
+
 ;;; Keybinding Configuration
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (+popup-buffer-mode +1)
-
-(use-package general
-  :after evil
-  :config
-  (general-override-mode 1)
-  (general-create-definer my-leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :non-normal-prefix "M-SPC")
-
-  (general-create-definer my-local-leader-def
-    :prefix ",")
-  )
-
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  )
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
 
 ;;; Load configs for specific features and modes
 (use-package avy
@@ -246,5 +215,7 @@
   (my-leader-def
   "h" '(:keymap help-map :wk "help"))
   )
+
+(require 'init-keybindings)
 
 (provide 'init)
