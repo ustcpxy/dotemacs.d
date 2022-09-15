@@ -30,9 +30,6 @@
 (use-package avy
   :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
-(require 'init-selectrum)
-
-
 ;;; recentf mode
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
