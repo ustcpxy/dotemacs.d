@@ -19,6 +19,8 @@
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   (setq vertico-cycle t)
 
+  (setq vertico-group-format nil)
+
   ;; Cleans up path when moving directories with shadowed paths syntax, e.g.
   ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
@@ -65,6 +67,7 @@
   ;; TAB cycle if there are only few candidates
   (setq completion-cycle-threshold 3)
 
+  (setq project-switch-commands #'project-find-file)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete))
@@ -122,6 +125,7 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Example configuration for Consult
+;; copied from offional manual but commented some useless configuration
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
@@ -182,6 +186,8 @@
   ;; The :init configuration is always executed (Not lazy)
   :init
 
+  (defalias 'consult-line-thing-at-point 'consult-line)
+  (defalias 'consult-ripgrep-thing-at-point 'consult-ripgrep)
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
@@ -216,6 +222,11 @@
    consult--source-project-recent-file
    :preview-key (kbd "M-."))
 
+  (consult-customize
+   consult-line-thing-at-point
+   consult-ripgrep-thing-at-point
+   :initial (thing-at-point 'symbol))
+
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<") ;; (kbd "C-+")
@@ -237,29 +248,99 @@
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
 )
+
+(defun nasy/orderless-dispatch-flex-first (_pattern index _total)
+  "orderless-flex for corfu."
+  (and (eq index 0) 'orderless-flex))
+
+(defun nasy/setup-corfu ()
+  "Setup corfu."
+  (setq-local orderless-matching-styles '(orderless-flex)
+              orderless-style-dispatchers nil)
+  (add-hook 'orderless-style-dispatchers #'nasy/orderless-dispatch-flex-first nil 'local))
 (use-package corfu
   ;; Optional customizations
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-auto t)                 ;; Enable auto completion
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
   ;; (corfu-separator ?\s)          ;; Orderless field separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  (corfu-quit-at-boundary t)   ;; Never quit at completion boundary
+  (corfu-quit-no-match 'separator)      ;; Never quit, even if there is no match
+  (corfu-preview-current nil)    ;; Disable current candidate preview
   ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   ;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
 
-  ;; Enable Corfu only for certain modes.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+  :hook ((prog-mode . nasy/setup-corfu))
 
   ;; Recommended: Enable Corfu globally.
   ;; This is recommended since Dabbrev can be used globally (M-/).
   ;; See also `corfu-excluded-modes'.
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  :config
+    (defun corfu-move-to-minibuffer ()
+      (interactive)
+      (let ((completion-extra-properties corfu--extra)
+            completion-cycle-threshold completion-cycling)
+;;        (toggle-chinese-search)
+        (apply #'consult-completion-in-region completion-in-region--data)))
+    (define-key corfu-map "\M-m" #'corfu-move-to-minibuffer)
+
+    (define-key corfu-map (kbd "C-j") 'corfu-next)
+    (define-key corfu-map (kbd "C-k") 'corfu-previous)
+
+    (defun corfu-enable-always-in-minibuffer ()
+  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+  (unless (or (bound-and-true-p mct--active)
+              (bound-and-true-p vertico--input))
+    ;; (setq-local corfu-auto nil) Enable/disable auto completion
+    (corfu-mode 1)))
+(add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+  )
+
+;; Add extensions
+(use-package cape
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+  :bind (("C-c p p" . completion-at-point) ;; capf
+         ("C-c p t" . complete-tag)        ;; etags
+         ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+         ("C-c p h" . cape-history)
+         ("C-c p f" . cape-file)
+         ("C-c p k" . cape-keyword)
+         ("C-c p s" . cape-symbol)
+         ("C-c p a" . cape-abbrev)
+         ("C-c p i" . cape-ispell)
+         ("C-c p l" . cape-line)
+         ("C-c p w" . cape-dict)
+         ("C-c p \\" . cape-tex)
+         ("C-c p _" . cape-tex)
+         ("C-c p ^" . cape-tex)
+         ("C-c p &" . cape-sgml)
+         ("C-c p r" . cape-rfc1345))
+  :init
+ ;; Use Company backends as Capfs.
+;; (setq completion-at-point-functions
+;;   (mapcar #'cape-company-to-capf
+;;     (list #'company-gtags ))) ;;(add-to-list 'completion-at-point-functions #'cape-line)
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
+)
+  ;; Use Company backends as Capfs.
+  (setq completion-at-point-functions
+    (mapcar #'cape-company-to-capf
+      (list #'company-gtags #'company-files)))
 
 (provide 'init-completion)

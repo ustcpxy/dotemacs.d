@@ -57,6 +57,8 @@
     (define-key evil-normal-state-map (kbd "g]")
                 (lambda () (interactive) (end-of-defun)))
 
+    (define-key evil-normal-state-map (kbd "zx") 'kill-current-buffer)
+
     (define-key evil-normal-state-map (kbd "[ b") 'previous-buffer)
     (define-key evil-normal-state-map (kbd "] b") 'next-buffer)
     (define-key evil-motion-state-map (kbd "[ b") 'previous-buffer)
