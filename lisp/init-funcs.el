@@ -61,4 +61,10 @@ the current layouts buffers."
       (apply orig args)
     (apply orig args)))
 
+;;;###autoload
+(defun +evil-escape-a (&rest _)
+  "Call `doom/escape' if `evil-force-normal-state' is called interactively."
+  (when (called-interactively-p 'any)
+    (call-interactively #'doom/escape)))
+
 (provide 'init-funcs)

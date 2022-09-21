@@ -20,10 +20,18 @@
     (define-key evil-motion-state-map (kbd "RET") nil))
 
   :config
+  (add-hook 'doom-escape-hook
+    (defun +evil-disable-ex-highlights-h ()
+      "Disable ex search buffer highlights."
+      (message "test ex")
+      (when (evil-ex-hl-active-p 'evil-ex-search)
+        (evil-ex-nohighlight)
+        t)))
   (progn
-    (setq-default evil-ex-search-persistent-highlight nil)
-    (setcdr evil-insert-state-map nil)
-    (define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+
+    ;; Make ESC (from normal mode) the universal escaper. See `doom-escape-hook'.
+    (advice-add #'evil-force-normal-state :after #'+evil-escape-a)
 
     (define-key evil-visual-state-map "p" 'evil-paste-after)
     (define-key evil-insert-state-map (kbd "C-r") 'evil-paste-from-register)
@@ -71,6 +79,8 @@
     (define-key evil-emacs-state-map (kbd "s-b") 'backward-word)
     (define-key evil-insert-state-map (kbd "s-b") 'backward-word)
 
+    (define-key evil-motion-state-map (kbd "*") 'evil-ex-search-word-forward)
+    (define-key evil-motion-state-map (kbd "#") 'evil-ex-search-word-backward)
 
 
     (define-key evil-ex-completion-map "\C-a" 'move-beginning-of-line)
