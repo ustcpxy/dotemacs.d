@@ -2,19 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-
-;; for GTD
-(use-package org
-  :ensure nil
-  :config
-  ;; To speed up startup, don't put to init section
-  (setq org-directory "/home/derek/pkms/gtd/")
-  )
-
-
-
-
-
 ;; for notes taking
 (use-package org-roam
   :custom

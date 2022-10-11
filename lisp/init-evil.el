@@ -13,6 +13,8 @@
   :init
   (setq evil-want-C-u-scroll t)
   (setq evil-want-keybinding nil)
+  ;; disable C-i to jump forward to restore TAB functionality in Org mode
+  (setq evil-want-C-i-jump nil)
   (evil-mode)
 
   ;; https://emacs.stackexchange.com/questions/46371/how-can-i-get-ret-to-follow-org-mode-links-when-using-evil-mode

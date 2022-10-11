@@ -23,6 +23,7 @@
 ;; Core
 (require 'init-evil)
 
+(require 'init-org)
 (require 'init-pkms)
 (require 'init-cc)
 ;;; Keybinding Configuration
