@@ -17,6 +17,7 @@
 
 (require 'init-funcs)
 (require 'init-ui)
+(require 'init-window)
 (require 'init-basic)
 (require 'init-completion)
 
