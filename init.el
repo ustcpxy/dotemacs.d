@@ -23,6 +23,7 @@
 ;; Core
 (require 'init-evil)
 
+(require 'init-pkms)
 (require 'init-cc)
 ;;; Keybinding Configuration
 ;; Make ESC quit prompts

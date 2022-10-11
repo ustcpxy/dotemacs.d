@@ -206,6 +206,13 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
                          "a" 'project-remember-projects-under
                          "x" 'project-forget-project)
 
+  (+general-global-menu! "notes" "n"
+    "f" 'org-roam-node-find
+    "i" 'org-roam-node-insert
+    "l" 'org-roam-buffer-toggle
+    "c" 'org-roam-capture
+    "j" 'org-roam-dailies-capture-today
+                         )
   (general-create-definer global-leader
     :keymaps 'override
     :states '(emacs normal hybrid motion visual operator)
