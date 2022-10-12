@@ -118,5 +118,30 @@
 
     ))
 
+(use-package evil-collection
+  :ensure t
+  :demand t
+  :config
+  (setq evil-collection-mode-list (remove 'lispy evil-collection-mode-list))
+  (evil-collection-init)
+
+   (cl-loop for (mode . state) in
+         '((org-agenda-mode . normal))
+         do (evil-set-initial-state mode state))
+
+
+  (evil-define-key 'normal dired-mode-map
+    (kbd "<RET>") 'dired-find-alternate-file
+    (kbd "C-k") 'dired-up-directory
+    "`" 'dired-open-term
+    "o" 'dired-find-file-other-window
+    "s" 'dired-sort-toggle-or-edit
+    "z" 'dired-get-size
+    ")" 'dired-omit-mode)
+
+  (evil-define-key 'normal help-mode-map
+    "o" 'link-hint-open-link)
+  )
+
 (provide 'init-evil)
 ;;; init-evil.el ends here

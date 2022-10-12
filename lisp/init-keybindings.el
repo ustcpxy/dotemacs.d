@@ -167,7 +167,6 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
                          "s" 'save-buffer
                          "w" 'sudo-edit
                          "S" 'save-some-buffers
-                         "j"  'dired-jump
                          "y" 'copy-file-name
                          "R" 'my/rename-current-buffer-file
                          "k" 'my/delete-file-and-buffer
@@ -214,6 +213,10 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
     "l" 'org-roam-buffer-toggle
     "c" 'org-roam-capture
     "j" 'org-roam-dailies-capture-today
+                         )
+
+  (+general-global-menu! "open" "o"
+                         "-"  'dired-jump
                          )
   (general-create-definer global-leader
     :keymaps 'override
