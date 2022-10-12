@@ -24,6 +24,7 @@
 ;; Core
 (require 'init-evil)
 
+(require 'init-git)
 (require 'init-org)
 (require 'init-pkms)
 (require 'init-cc)

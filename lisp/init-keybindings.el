@@ -113,10 +113,9 @@ all hooks after it are ignored.")
    "oy" 'youdao-dictionary-search-at-point+
    "oo" 'zilongshanren/hotspots
    "or" 'org-roam-node-find
-   "gs" 'magit-status
+   "gg" 'magit-status
    "gd" 'vc-diff
-   "gg" 'xref-find-definitions
-   "gr" 'xref-find-references)
+   )
 
 
   (defmacro +general-global-menu! (name infix-key &rest body)
