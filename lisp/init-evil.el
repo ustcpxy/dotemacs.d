@@ -10,6 +10,28 @@
 
 (use-package evil
   :ensure t
+  ;; copied from doom-emacs
+  :preface
+  (setq evil-ex-search-vim-style-regexp t
+        evil-ex-visual-char-range t  ; column range for ex commands
+        evil-mode-line-format 'nil
+        ;; more vim-like behavior
+        evil-symbol-word-search t
+        ;; if the current state is obvious from the cursor's color/shape, then
+        ;; we won't need superfluous indicators to do it instead.
+        evil-default-cursor '+evil-default-cursor-fn
+        evil-normal-state-cursor 'box
+        evil-emacs-state-cursor  '(box +evil-emacs-cursor-fn)
+        evil-insert-state-cursor 'bar
+        evil-visual-state-cursor 'hollow
+        ;; Only do highlighting in selected window so that Emacs has less work
+        ;; to do highlighting them all.
+        evil-ex-interactive-search-highlight 'selected-window
+        ;; It's infuriating that innocuous "beginning of line" or "end of line"
+        ;; errors will abort macros, so suppress them:
+        evil-kbd-macro-suppress-motion-error t
+        evil-undo-system 'undo-redo
+        )
   :init
   (setq evil-want-C-u-scroll t)
   (setq evil-want-keybinding nil)
@@ -22,6 +44,7 @@
     (define-key evil-motion-state-map (kbd "RET") nil))
 
   :config
+  (evil-select-search-module 'evil-search-module 'evil-search)
   (add-hook 'doom-escape-hook
     (defun +evil-disable-ex-highlights-h ()
       "Disable ex search buffer highlights."
