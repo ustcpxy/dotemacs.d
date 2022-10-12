@@ -214,4 +214,10 @@ If on a:
             (org-element-property :begin context)
             (org-element-property :end context))))))))
 
+(defun pop-to-org-agenda-with-next-actions (&optional split)
+  "Visit the org agenda, in the current window or a SPLIT."
+  (interactive "P")
+  (org-agenda nil "n")
+  (when (not split)
+    (delete-other-windows)))
 (provide 'init-funcs)

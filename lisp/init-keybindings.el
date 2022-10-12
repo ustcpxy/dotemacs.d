@@ -43,6 +43,14 @@ all hooks after it are ignored.")
 (global-set-key [remap keyboard-quit] #'doom/escape)
 
 
+(global-set-key (kbd "<f12>") 'org-agenda)
+(global-set-key (kbd "<f9>") 'org-capture)
+(global-set-key (kbd "<f8>") 'org-capture-finalize)
+(global-set-key (kbd "<f5>") 'org-refile)
+(global-set-key (kbd "M-<f9>") 'org-capture-refile)
+(global-set-key (kbd "M-<f8>") 'org-capture-kill)
+(global-set-key (kbd "M-<f12>") 'pop-to-org-agenda-with-next-actions)
+
 (global-set-key (kbd "M-i") 'my/imenu)
 (global-set-key (kbd "M-`") 'consult-line)
 (global-set-key (kbd "M-s") 'save-buffer)
@@ -173,7 +181,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
                          "!" 'my/exec-shell-on-buffer)
 
   (+general-global-menu! "window" "w"
-                         "/" 'split-window-right
+                         "v" 'split-window-right
                          "-" 'split-window-below
                          "m" 'delete-other-windows
                          "u" 'winner-undo
