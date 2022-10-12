@@ -45,6 +45,9 @@ all hooks after it are ignored.")
 
 (global-set-key (kbd "M-i") 'my/imenu)
 (global-set-key (kbd "M-`") 'consult-line)
+(global-set-key (kbd "M-s") 'save-buffer)
+(global-set-key (kbd "M-w") 'delete-window)
+(global-set-key (kbd "M-q") (if (daemonp) #'delete-frame #'evil-quit-all))
 
 
 (use-package which-key

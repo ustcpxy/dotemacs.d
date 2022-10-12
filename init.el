@@ -30,7 +30,6 @@
 ;;; Keybinding Configuration
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(+popup-buffer-mode +1)
 
 ;;; recentf mode
 (recentf-mode 1)
