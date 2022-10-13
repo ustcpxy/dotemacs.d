@@ -164,6 +164,9 @@
 
   (evil-define-key 'normal help-mode-map
     "o" 'link-hint-open-link)
+
+  (evil-define-key 'normal c-mode-base-map
+    "gr" 'xref-find-references)
   )
 
 (provide 'init-evil)
