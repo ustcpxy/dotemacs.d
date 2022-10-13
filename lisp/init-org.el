@@ -314,7 +314,8 @@ object (e.g., within a comment).  In these case, you need to use
 (use-package evil-org
   :ensure t
   :after org
-  :hook (org-mode . (lambda () evil-org-mode))
+  :hook (org-mode . evil-org-mode)
+  :hook (org-capture-mode . evil-insert-state)
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
