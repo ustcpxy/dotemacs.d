@@ -12,4 +12,8 @@
         '(c++-mode objc-mode c-mode)
       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
+(use-package ace-pinyin
+  :after avy
+  :init (setq ace-pinyin-use-avy t)
+  :config (ace-pinyin-global-mode t))
 (provide 'init-basic)
