@@ -38,9 +38,7 @@
 (setq custom-safe-themes t)
 (use-package doom-themes
   :init
-  (if (display-graphic-p)
-      (load-theme 'doom-solarized-light)
-    (load-theme 'doom-tomorrow-night))
+  (load-theme 'doom-solarized-light)
   )
 
 ;;; Fonts
