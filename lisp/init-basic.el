@@ -1,5 +1,6 @@
 ;;;;  -*- lexical-binding: t; -*-
 
+(global-auto-revert-mode t)
 
 (use-package smartparens
   :init
