@@ -11,6 +11,8 @@ otherwise in default state."
                  (not (evil-emacs-state-p))
                  (bobp) (eolp))
         (evil-insert-state))))
+
+  (setq magit-save-repository-buffers 'dontask)
   )
 
 

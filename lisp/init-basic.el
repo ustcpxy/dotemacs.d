@@ -17,4 +17,14 @@
   :after avy
   :init (setq ace-pinyin-use-avy t)
   :config (ace-pinyin-global-mode t))
+
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1)
+
+  (setq super-save-auto-save-when-idle t)
+  (setq auto-save-default nil)
+  )
+
 (provide 'init-basic)
