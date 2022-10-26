@@ -7,6 +7,7 @@
 *.log
 test/.local*/
 test/result
+/custom.el
 
 # emacs tempfiles that shouldn't be there
 .dap-breakpoints
