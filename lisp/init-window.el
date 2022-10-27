@@ -17,7 +17,27 @@
                                       "*cvs*"
                                       "*Buffer List*"
                                       "*Ibuffer*"
-                                      "*esh command on file*")))
+                                      "*esh command on file*"))
+  (setq winner-dont-bind-my-keys t)
+  
+  :config
+  ;; simlar as text-scale-adjust via using transient-map
+  (defun transient-winner-undo ()
+    "Transient version of `winner-undo'."
+    (interactive)
+    (let ((echo-keystrokes nil))
+      (winner-undo)
+      (message "Winner: [u]ndo [r]edo")
+      (set-transient-map
+       (let ((map (make-sparse-keymap)))
+	 (define-key map [?u] #'winner-undo)
+	 (define-key map [?r] #'winner-redo)
+	 map)
+       t)))
+  :bind (:map winner-mode-map
+	      ("C-c <left>" . transient-winner-undo))
+  )
+
 ;; Quickly switch windows
 (use-package ace-window
   :custom-face

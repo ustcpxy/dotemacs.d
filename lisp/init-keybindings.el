@@ -183,9 +183,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (+general-global-menu! "window" "w"
                          "v" 'split-window-right
                          "-" 'split-window-below
-                         "m" 'delete-other-windows
-                         "u" 'winner-undo
-                         "z" 'winner-redo)
+                         "m" 'delete-other-windows)
 
   (+general-global-menu! "toggle" "t"
                          "s" 'flycheck-mode
