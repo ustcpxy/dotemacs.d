@@ -220,4 +220,27 @@ If on a:
   (org-agenda nil "n")
   (when (not split)
     (delete-other-windows)))
+
+
+(defvar my-disable-idle-timer (daemonp)
+  "Function passed to `my-run-with-idle-timer' is run immediately.")
+
+(defun my-run-with-idle-timer (seconds func)
+  "After SECONDS, run function FUNC once."
+  (cond
+   ((or my-disable-idle-timer my-lightweight-mode-p)
+    (funcall func))
+   (t
+    (run-with-idle-timer seconds nil func))))
+
+(defun my-write-to-file (str file)
+  "Write STR to FILE."
+  (with-temp-buffer
+    (insert str)
+    (write-file (file-truename file))))
+
+(defun my-write-to-missing-file (str file)
+  "Write STR to FILE if it's missing."
+  (unless (file-exists-p file)
+    (my-write-to-file str file)))
 (provide 'init-funcs)
