@@ -14,7 +14,6 @@
 (tooltip-mode -1)           ; Disable tooltips
 (menu-bar-mode -1)          ; Disable the menu bar
 
-(global-hl-line-mode t)
 (column-number-mode)
 
 (global-display-line-numbers-mode t)
