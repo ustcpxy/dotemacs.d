@@ -1,3 +1,6 @@
 [submodule "site-lisp/keyfreq"]
 	path = site-lisp/keyfreq
 	url = https://github.com/dacap/keyfreq
+[submodule "site-lisp/org-ioslide"]
+	path = site-lisp/org-ioslide
+	url = https://github.com/ustcpxy/org-ioslide

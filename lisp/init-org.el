@@ -23,6 +23,7 @@
   ;; (add-hook 'org-load-hook #'+org-init-hacks-h)
   :hook (org-load . +org-init-hacks-h)
   :config
+  (require 'ox-ioslide)
   ;; To speed up startup, don't put to init section
   (setq org-directory "/home/derek/pkms/gtd/")
 
