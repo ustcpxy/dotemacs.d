@@ -41,9 +41,20 @@
 
     (setq org-return-follows-link t)
 
-    (setq org-plantuml-jar-path
-          (expand-file-name "~/.doom.d/plantuml.jar"))
-    (setq org-ditaa-jar-path "~/.doom.d/ditaa.jar")
+
+        (setq org-confirm-babel-evaluate nil) 
+     ;; plantuml and dot
+(setq plantuml-jar-path (concat (expand-file-name "site-lisp/" user-emacs-directory) "plantuml.jar"))
+(setq org-plantuml-jar-path plantuml-jar-path)
+
+(add-to-list
+  'org-src-lang-modes '("plantuml" . plantuml))
+
+;; (add-to-list 'org-babel-load-languages '(plantuml . t))
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((plantuml . t)))
+
 
   (add-to-list 'org-modules 'org-habit)
   (add-to-list 'org-modules 'org-tempo)
@@ -343,8 +354,6 @@ object (e.g., within a comment).  In these case, you need to use
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
-
-
 
 
 
