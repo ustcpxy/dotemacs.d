@@ -75,4 +75,16 @@
   :ensure nil
   :hook (after-init . delete-selection-mode))
 
+(use-package rime
+  :custom
+  (default-input-method "rime")
+  :config
+  (setq rime-user-data-dir "~/.config/fcitx/rime")
+
+  (setq rime-show-candidate 'posframe)
+  )
+
+
 (provide 'init-basic)
+
+				       
