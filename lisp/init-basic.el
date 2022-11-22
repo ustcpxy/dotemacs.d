@@ -84,6 +84,10 @@
   (setq rime-show-candidate 'posframe)
   )
 
+(use-package pangu-spacing
+  :config
+  (global-pangu-spacing-mode 1)
+  )
 
 (provide 'init-basic)
 
