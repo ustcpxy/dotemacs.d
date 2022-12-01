@@ -49,6 +49,7 @@
 (require 'init-org)
 (require 'init-pkms)
 (require 'init-cc)
+(require 'init-citre)
 ;;; Keybinding Configuration
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

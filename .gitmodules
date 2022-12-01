@@ -4,3 +4,6 @@
 [submodule "site-lisp/org-ioslide"]
 	path = site-lisp/org-ioslide
 	url = https://github.com/ustcpxy/org-ioslide
+[submodule "site-lisp/citre"]
+	path = site-lisp/citre
+	url = https://github.com/universal-ctags/citre.git
