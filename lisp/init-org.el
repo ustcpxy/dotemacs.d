@@ -355,7 +355,8 @@ object (e.g., within a comment).  In these case, you need to use
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-
+(with-eval-after-load 'ox
+  (require 'ox-hugo))
 
 (provide 'init-org)
 ;;; init-org.el ends here
