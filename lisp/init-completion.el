@@ -339,8 +339,8 @@
   ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
 )
   ;; Use Company backends as Capfs.
-  (setq completion-at-point-functions
-    (mapcar #'cape-company-to-capf
-      (list #'company-gtags #'company-files)))
+  ;; (setq completion-at-point-functions
+  ;;   (mapcar #'cape-company-to-capf
+  ;;     (list #'company-gtags #'company-files)))
 
 (provide 'init-completion)

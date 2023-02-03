@@ -12,8 +12,8 @@
 
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   (add-to-list 'xref-backend-functions 'gxref-xref-backend)
-  (advice-add #'xref-find-definitions :around #'gtags-env-patch)
-  (advice-add #'xref-find-references :around #'gtags-env-patch)
+  ;; (advice-add #'xref-find-definitions :around #'gtags-env-patch)
+  ;; (advice-add #'xref-find-references :around #'gtags-env-patch)
   (setq xref-prompt-for-identifier nil)
 )
 
