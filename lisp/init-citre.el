@@ -9,4 +9,6 @@
               imenu-alist))
 (advice-add 'citre-imenu-create-index-function :filter-return #'filter-imenu)
 
+(require 'color-rg)
+
 (provide 'init-citre)
