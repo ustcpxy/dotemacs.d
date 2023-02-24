@@ -10,5 +10,7 @@
 (advice-add 'citre-imenu-create-index-function :filter-return #'filter-imenu)
 
 (require 'color-rg)
+;; @https://github.com/manateelazycat/color-rg/issues/58
+(add-hook 'color-rg-mode-hook 'evil-insert-state)
 
 (provide 'init-citre)
