@@ -243,4 +243,19 @@ If on a:
   "Write STR to FILE if it's missing."
   (unless (file-exists-p file)
     (my-write-to-file str file)))
+
+(defun my/generate-agenda-weekly-review ()
+  "Generate the agenda for the weekly review"
+  (interactive)
+  (let ((span-days 24)
+        (offset-past-days 10))
+    (message "Generating agenda for %s days starting %s days ago"
+             span-days offset-past-days)
+    (org-agenda-list nil (- (time-to-days (date-to-time
+                                           (current-time-string)))
+                            offset-past-days) 
+                     span-days)
+    (org-agenda-log-mode)
+    (goto-char (point-min))))
+
 (provide 'init-funcs)

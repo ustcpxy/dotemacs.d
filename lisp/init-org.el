@@ -216,17 +216,28 @@ object (e.g., within a comment).  In these case, you need to use
 		 ((org-agenda-overriding-header "Habits")
 		  (org-agenda-sorting-strategy
 		   '(todo-state-down effort-up category-keep))))
-		("n" "Next Agenda"
+		("D" "Daily Action List"
 		 ((agenda ""
-			  ((org-agenda-span 'day)
-			   (org-agenda-start-day nil)
-			   (org-deadline-warning-days 3)))
-		  (tags-todo "-CANCELLED/!NEXT"
-			     ((org-agenda-overriding-header "Next Tasks")
-			      (org-tags-match-list-sublevels t)
-			      (org-agenda-todo-ignore-with-date t)
-			      (org-agenda-sorting-strategy
-			       '(effort-up category-keep))))))
+			  ((org-agenda-span 1)
+			   (org-agenda-sorting-strategy
+			    (quote
+			     ((agenda time-up category-up tag-up))))
+			   (org-deadline-warning-days 7)))) nil)
+		;; ("n" "Next Agenda"
+		;;  ((agenda ""
+		;; 	  ((org-agenda-span 'day)
+		;; 	   (org-agenda-start-day nil)
+		;; 	   (org-deadline-warning-days 3)))
+		;;   (tags-todo "-CANCELLED/!NEXT"
+		;; 	     ((org-agenda-overriding-header "Next Tasks")
+		;; 	      (org-tags-match-list-sublevels t)
+		;; 	      (org-agenda-todo-ignore-with-date t)
+		;; 	      (org-agenda-sorting-strategy
+		;; 	       '(effort-up category-keep))))))
+		("n" . "Next Actions List")
+		("nn" tags "+TODO=\"NEXT\"|+TODO=\"STARTED\"")
+		("na" tags "+home+admin+TODO=\"NEXT\"|+home+admin+TODO=\"STARTED\"")
+		("nh" tags "+home+TODO=\"NEXT\"|+home+TODO=\"STARTED\"")
 		(" " "Block Agenda"
 		 ((agenda "" nil)
 		  (tags-todo "REFILE"
