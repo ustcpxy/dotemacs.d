@@ -54,16 +54,11 @@ all hooks after it are ignored.")
 (global-set-key (kbd "M-i") 'my/imenu)
 (global-set-key (kbd "M-`") 'consult-line)
 (global-set-key (kbd "M-s") 'save-buffer)
+(global-set-key (kbd "M-m") 'evilmi-jump-items-native)
 (global-set-key (kbd "M-w") 'delete-window)
-(global-set-key (kbd "M-q") (if (daemonp) #'delete-frame #'evil-quit-all))
+(global-set-key (kbd "M-q") 'save-buffers-kill-emacs)
 
-
-(use-package which-key
-  :hook (after-init . which-key-mode)
-  :ensure t
-  :init
-  (setq which-key-side-window-location 'bottom))
-
+			      
 (use-package general
   :init
   (with-eval-after-load 'evil

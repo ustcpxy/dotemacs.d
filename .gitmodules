@@ -10,3 +10,6 @@
 [submodule "site-lisp/color-rg"]
 	path = site-lisp/color-rg
 	url = https://github.com/manateelazycat/color-rg
+[submodule "site-lisp/evil-matchit"]
+	path = site-lisp/evil-matchit
+	url = https://github.com/redguardtoo/evil-matchit
