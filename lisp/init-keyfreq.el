@@ -17,6 +17,19 @@
         previous-line
         next-line
 	keyfreq-show
+	evil-next-line
+	evil-previous-line
+evil-forward-char
+	right-char
+	left-char
+	scroll-up-command
+	scroll-down-command
+	org-self-insert-command
+	org-delete-backward-char
+	mwheel-scroll
+	vertico-exit
+	vertico-next
+	vertico-directory-delete-char
 	))
 
 (my-write-to-missing-file "()" keyfreq-file)

@@ -41,6 +41,8 @@ all hooks after it are ignored.")
              (setq this-command 'keyboard-quit))))))
 
 (global-set-key [remap keyboard-quit] #'doom/escape)
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-quit)
 
 
 (global-set-key (kbd "<f12>") 'org-agenda)

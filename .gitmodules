@@ -13,3 +13,9 @@
 [submodule "site-lisp/evil-matchit"]
 	path = site-lisp/evil-matchit
 	url = https://github.com/redguardtoo/evil-matchit
+[submodule "site-lisp/thing-edit"]
+	path = site-lisp/thing-edit
+	url = https://github.com/manateelazycat/thing-edit
+[submodule "site-lisp/one-key"]
+	path = site-lisp/one-key
+	url = https://github.com/manateelazycat/one-key
