@@ -1,6 +1,7 @@
 ;;;;  -*- lexical-binding: t; -*-
 
 (global-auto-revert-mode t)
+(which-key-mode)
 
 (use-package smartparens
   :init

@@ -52,6 +52,7 @@
 (require 'init-cc)
 (require 'init-citre)
 (require 'init-thing-edit)
+(require 'init-kill-ring)
 ;;; Keybinding Configuration
 
 (require 'init-keybindings)

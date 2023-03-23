@@ -55,9 +55,7 @@ all hooks after it are ignored.")
 
 (global-set-key (kbd "M-i") 'my/imenu)
 (global-set-key (kbd "M-`") 'consult-line)
-(global-set-key (kbd "M-s") 'save-buffer)
 (global-set-key (kbd "M-m") 'evilmi-jump-items-native)
-(global-set-key (kbd "M-w") 'delete-window)
 (global-set-key (kbd "M-q") 'save-buffers-kill-emacs)
 
 			      
@@ -277,5 +275,14 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
    "e" 'live-py-set-version)
 
   )
+
+;; high frequently keybindings
+(global-set-key (kbd "M-p M-p") 'project-switch-project)
+(global-set-key (kbd "M-SPC") 'avy-goto-word-or-subword-1)
+(global-set-key (kbd "M-<up>") 'beginning-of-buffer)
+(global-set-key (kbd "M-<down>") 'end-of-buffer)
+(global-set-key (kbd "ESC <down>") 'end-of-buffer)
+
+
 
 (provide 'init-keybindings)
