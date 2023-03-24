@@ -3,41 +3,6 @@
 ;;; Code:
 
 
-;; Restore old window configurations
-(use-package winner
-  :ensure nil
-  :commands (winner-undo winner-redo)
-  :hook (after-init . winner-mode)
-  :init (setq winner-boring-buffers '("*Completions*"
-                                      "*Compile-Log*"
-                                      "*inferior-lisp*"
-                                      "*Fuzzy Completions*"
-                                      "*Apropos*"
-                                      "*Help*"
-                                      "*cvs*"
-                                      "*Buffer List*"
-                                      "*Ibuffer*"
-                                      "*esh command on file*"))
-  (setq winner-dont-bind-my-keys t)
-  
-  :config
-  ;; simlar as text-scale-adjust via using transient-map
-  (defun transient-winner-undo ()
-    "Transient version of `winner-undo'."
-    (interactive)
-    (let ((echo-keystrokes nil))
-      (winner-undo)
-      (message "Winner: [u]ndo [r]edo")
-      (set-transient-map
-       (let ((map (make-sparse-keymap)))
-	 (define-key map [?u] #'winner-undo)
-	 (define-key map [?r] #'winner-redo)
-	 map)
-       t)))
-  :bind (:map winner-mode-map
-	      ("C-c <left>" . transient-winner-undo))
-  )
-
 ;; Quickly switch windows
 (use-package ace-window
   :custom-face
@@ -74,25 +39,9 @@
             (if this-win-2nd (other-window 1))))
       (user-error "`toggle-window-split' only supports two windows")))
 
-  ;; Select widnow via `M-1'...`M-9'
-  (defun aw--select-window (number)
-    "Slecet the specified window."
-    (when (numberp number)
-      (let ((found nil))
-        (dolist (win (aw-window-list))
-          (when (and (window-live-p win)
-                     (eq number
-                         (string-to-number
-                          (window-parameter win 'ace-window-path))))
-            (setq found t)
-            (aw-switch-to-window win)))
-        (unless found
-          (message "No specified window: %d" number)))))
-  (dotimes (n 9)
-    (bind-key (format "M-%d" (1+ n))
-              (lambda ()
-                (interactive)
-                (aw--select-window (1+ n))))))
+  
+  
+  )
 
 ;; Enforce rules for popups
 (use-package popper

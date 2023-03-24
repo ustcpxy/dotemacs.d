@@ -58,6 +58,11 @@ all hooks after it are ignored.")
 (global-set-key (kbd "M-m") 'evilmi-jump-items-native)
 (global-set-key (kbd "M-q") 'save-buffers-kill-emacs)
 
+;; window access
+(global-set-key (kbd "M-o") 'ace-window)
+(global-set-key (kbd "M-1") 'toggle-one-window)
+(global-set-key (kbd "M-2") 'split-window-right)
+
 			      
 (use-package general
   :init
