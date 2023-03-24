@@ -22,3 +22,6 @@
 [submodule "site-lisp/blink-search"]
 	path = site-lisp/blink-search
 	url = https://github.com/manateelazycat/blink-search
+[submodule "site-lisp/symbol-overlay"]
+	path = site-lisp/symbol-overlay
+	url = https://github.com/wolray/symbol-overlay
