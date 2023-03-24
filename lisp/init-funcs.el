@@ -258,4 +258,20 @@ If on a:
     (org-agenda-log-mode)
     (goto-char (point-min))))
 
+
+;; copied from https://github.com/manateelazycat/lazycat-emacs/blob/7e5a069536d4d1a6623f42af33d5d8bf983b1f20/site-lisp/extensions/lazycat/basic-toolkit.el#L390
+(defun remember-init ()
+  "Remember current position and setup."
+  (interactive)
+  (point-to-register 8)
+  (message "Have remember one position"))
+
+(defun remember-jump ()
+  "Jump to latest position and setup."
+  (interactive)
+  (let ((tmp (point-marker)))
+    (jump-to-register 8)
+    (set-register 8 tmp))
+  (message "Have back to remember position"))
+
 (provide 'init-funcs)
