@@ -194,4 +194,5 @@
             (delete-window window)))))
     (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
+(require 'toggle-one-window)
 (provide 'init-window)

@@ -25,3 +25,6 @@
 [submodule "site-lisp/symbol-overlay"]
 	path = site-lisp/symbol-overlay
 	url = https://github.com/wolray/symbol-overlay
+[submodule "site-lisp/toggle-one-window"]
+	path = site-lisp/toggle-one-window
+	url = https://github.com/manateelazycat/toggle-one-window
