@@ -274,4 +274,29 @@ If on a:
     (set-register 8 tmp))
   (message "Have back to remember position"))
 
+
+;;;###autoload
+(defun my/search-project (&optional arg)
+  "Conduct a text search in the current project root.
+If prefix ARG is set, include ignored/hidden files."
+  (interactive "P")
+  (let* ((project-project-root nil)
+         (disabled-command-function nil)
+         (current-prefix-arg (unless (eq arg 'other) arg))
+         (default-directory
+           (if (eq arg 'other)
+               (if-let (projects (project-known-project-roots))
+                   (completing-read "Search project: " projects nil t)
+                 (user-error "There are no known projects"))
+             default-directory)))
+    (call-interactively
+     (cond            
+                      (#'consult-ripgrep)))))
+
+;;;###autoload
+(defun my/search-other-project ()
+  "Conduct a text search in a known project."
+  (interactive)
+  (my/search-project 'other))
+
 (provide 'init-funcs)

@@ -44,6 +44,7 @@ all hooks after it are ignored.")
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
+;; (global-set-key (kbd "\e\e a") 'org-agenda)
 
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key (kbd "<f9>") 'org-capture)
@@ -63,7 +64,11 @@ all hooks after it are ignored.")
 (global-set-key (kbd "M-1") 'toggle-one-window)
 (global-set-key (kbd "M-2") 'split-window-right)
 
-			      
+;; search
+(global-set-key (kbd "M-/") 'my/search-other-project)
+(global-set-key (kbd "M-s") 'consult-ripgrep-thing-at-point)
+(global-set-key (kbd "M-p") 'project-switch-project)
+
 (use-package general
   :init
   (with-eval-after-load 'evil
