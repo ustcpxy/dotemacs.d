@@ -299,4 +299,110 @@ If prefix ARG is set, include ignored/hidden files."
   (interactive)
   (my/search-project 'other))
 
+
+;;; Code: delete-block
+;; copied from https://github.com/manateelazycat/delete-block/blob/master/delete-block.el
+(require 'subword)
+(defun delete-block-forward ()
+  (interactive)
+  (if (eobp)
+      (message "End of buffer")
+    (let* ((syntax-move-point
+            (save-excursion
+              (skip-syntax-forward (string (char-syntax (char-after))))
+              (point)
+              ))
+           (subword-move-point
+            (save-excursion
+              (subword-forward)
+              (point))))
+      (kill-region (point) (min syntax-move-point subword-move-point)))))
+
+(defun delete-block-backward ()
+  (interactive)
+  (if (bobp)
+      (message "Beginning of buffer")
+    (let* ((syntax-move-point
+            (save-excursion
+              (skip-syntax-backward (string (char-syntax (char-before))))
+              (point)
+              ))
+           (subword-move-point
+            (save-excursion
+              (subword-backward)
+              (point))))
+      (kill-region (point) (max syntax-move-point subword-move-point)))))
+
+;;; Code: open-newline
+;; https://github.com/manateelazycat/open-newline/blob/master/open-newline.el
+(defun open-newline-above (arg)
+  "Move to the previous line (like vi) and then opens a line."
+  (interactive "p")
+  (beginning-of-line)
+  (open-line arg)
+  (if (not (member major-mode '(haskell-mode org-mode literate-haskell-mode)))
+      (indent-according-to-mode)
+    (beginning-of-line)))
+
+(defun open-newline-below (arg)
+  "Move to the next line (like vi) and then opens a line."
+  (interactive "p")
+  (end-of-line)
+  (open-line arg)
+  (call-interactively 'next-line arg)
+  (if (not (member major-mode '(haskell-mode org-mode literate-haskell-mode)))
+      (indent-according-to-mode)
+    (beginning-of-line)))
+
+
+
+(defun duplicate-line-or-region-above (&optional reverse)
+  "Duplicate current line or region above.
+By default, duplicate current line above.
+If mark is activate, duplicate region lines above.
+Default duplicate above, unless option REVERSE is non-nil."
+  (interactive)
+  (let ((original-column (current-column))
+        duplicate-content)
+    (if mark-active
+        ;; If mark active.
+        (let ((region-start-pos (region-beginning))
+              (region-end-pos (region-end)))
+          ;; Set duplicate start line position.
+          (setq region-start-pos (progn
+                                   (goto-char region-start-pos)
+                                   (line-beginning-position)))
+          ;; Set duplicate end line position.
+          (setq region-end-pos (progn
+                                 (goto-char region-end-pos)
+                                 (line-end-position)))
+          ;; Get duplicate content.
+          (setq duplicate-content (buffer-substring region-start-pos region-end-pos))
+          (if reverse
+              ;; Go to next line after duplicate end position.
+              (progn
+                (goto-char region-end-pos)
+                (forward-line +1))
+            ;; Otherwise go to duplicate start position.
+            (goto-char region-start-pos)))
+      ;; Otherwise set duplicate content equal current line.
+      (setq duplicate-content (buffer-substring
+                               (line-beginning-position)
+                               (line-end-position)))
+      ;; Just move next line when `reverse' is non-nil.
+      (and reverse (forward-line 1))
+      ;; Move to beginning of line.
+      (beginning-of-line))
+    ;; Open one line.
+    (open-line 1)
+    ;; Insert duplicate content and revert column.
+    (insert duplicate-content)
+    (move-to-column original-column t)))
+
+(defun duplicate-line-or-region-below ()
+  "Duplicate current line or region below.
+By default, duplicate current line below.
+If mark is activate, duplicate region lines below."
+  (interactive)
+  (duplicate-line-or-region-above t))
 (provide 'init-funcs)

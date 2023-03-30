@@ -14,6 +14,7 @@
 
 (global-set-key (kbd "<f7>") 'symbol-overlay-remove-all)
 
+(define-key symbol-overlay-map (kbd "<f8>") 'symbol-overlay-put)
 (provide 'init-symbol-overlay)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

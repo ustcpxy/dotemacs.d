@@ -67,7 +67,11 @@ all hooks after it are ignored.")
 ;; search
 (global-set-key (kbd "M-/") 'my/search-other-project)
 (global-set-key (kbd "M-s") 'consult-ripgrep-thing-at-point)
-(global-set-key (kbd "M-p") 'project-switch-project)
+(global-set-key (kbd "C-o") 'open-newline-above)
+(global-set-key (kbd "C-l") 'open-newline-below)
+(global-set-key (kbd "C-M-o") 'duplicate-line-or-region-above)
+(global-set-key (kbd "C-M-l") 'duplicate-line-or-region-below)
+
 
 (use-package general
   :init
@@ -287,7 +291,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   )
 
 ;; high frequently keybindings
-;; (global-set-key (kbd "M-p M-p") 'project-switch-project)
+(global-set-key (kbd "M-p M-p") 'project-switch-project)
 (global-set-key (kbd "M-SPC") 'avy-goto-word-or-subword-1)
 (global-set-key (kbd "M-<up>") 'beginning-of-buffer)
 (global-set-key (kbd "M-<down>") 'end-of-buffer)
