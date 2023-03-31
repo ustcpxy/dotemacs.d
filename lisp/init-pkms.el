@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package emacsql-sqlite-builtin
+  )
 ;; for notes taking
 (use-package org-roam
   :custom
@@ -15,7 +17,7 @@
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (setq org-roam-db-location (concat org-roam-directory ".org-roam.db"))
-
+(setq org-roam-database-connector 'sqlite-builtin)
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?"
            :if-new (file+head "pages/${slug}.org"
