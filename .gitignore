@@ -26,6 +26,7 @@ server/
 smex-items
 tramp
 var/
+tree-sitter/
 
 # compiled files
 *.elc

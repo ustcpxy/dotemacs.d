@@ -60,7 +60,7 @@ all hooks after it are ignored.")
 (global-set-key (kbd "M-q") 'save-buffers-kill-emacs)
 
 ;; window access
-(global-set-key (kbd "M-o") 'ace-window)
+;; (global-set-key (kbd "M-o") 'ace-window)
 (global-set-key (kbd "M-1") 'toggle-one-window)
 (global-set-key (kbd "M-2") 'split-window-right)
 
@@ -291,11 +291,17 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   )
 
 ;; high frequently keybindings
-(global-set-key (kbd "M-p M-p") 'project-switch-project)
+(global-set-key (kbd "M-o") 'project-switch-project)
 (global-set-key (kbd "M-SPC") 'avy-goto-word-or-subword-1)
 (global-set-key (kbd "M-<up>") 'beginning-of-buffer)
 (global-set-key (kbd "M-<down>") 'end-of-buffer)
 (global-set-key (kbd "ESC <down>") 'end-of-buffer)
+(global-set-key (kbd "M-u") 'undo)
+
+
+
+
+
 
 
 
