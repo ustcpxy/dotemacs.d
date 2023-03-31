@@ -28,3 +28,6 @@
 [submodule "site-lisp/toggle-one-window"]
 	path = site-lisp/toggle-one-window
 	url = https://github.com/manateelazycat/toggle-one-window
+[submodule "site-lisp/fingertip"]
+	path = site-lisp/fingertip
+	url = https://github.com/manateelazycat/fingertip

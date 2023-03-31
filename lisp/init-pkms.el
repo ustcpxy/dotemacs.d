@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package emacsql-sqlite-builtin
+(use-package emacsql
   )
 ;; for notes taking
 (use-package org-roam

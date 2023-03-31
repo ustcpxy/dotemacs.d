@@ -50,6 +50,7 @@
 (require 'init-org)
 (require 'init-pkms)
 (require 'init-cc)
+(require 'init-treesit)
 (require 'init-citre)
 (require 'init-thing-edit)
 (require 'init-kill-ring)
