@@ -111,7 +111,51 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none)))))
+                 (window-parameters (mode-line-format . none))))
+
+  ;; copied from https://emacs-china.org/t/vertico-candidates-embark/24154
+  (defvar eli/vertico-marked-list nil
+  "List of marked candidates in minibuffer.")
+
+(defun eli/vertico-mark ()
+  "Mark candidates in minibuffer"
+  (interactive)
+  (let*
+	  ((selected (embark--vertico-selected))
+	   (target (cdr selected)))
+	(if (member target eli/vertico-marked-list)
+		(setq eli/vertico-marked-list (delete target eli/vertico-marked-list))
+	  (push target eli/vertico-marked-list))))
+
+(defun eli/vertico-marked-p (candidate)
+  "Return t if CANDIDATE is in `eli/vertico-marked-list'."
+  (member (concat vertico--base candidate) eli/vertico-marked-list))
+
+(defun eli/vertico--format-candidate-hl-marked (args)
+  "Highlight marked vertico items."
+  (let* ((cand (car args)))
+	(if (eli/vertico-marked-p cand)
+		(add-face-text-property 0 (length cand) 'embark-collect-marked nil cand)
+	  (vertico--remove-face 0 (length cand) 'embark-collect-marked cand))
+	args))
+
+(advice-add #'vertico--format-candidate :filter-args #'eli/vertico--format-candidate-hl-marked)
+
+(defun eli/vertico-marked-list-clean ()
+  "Initialize `eli/vertico-marked-list' and `eli/vertico-mark-type'."
+  (setq eli/vertico-marked-list nil))
+
+(add-hook 'minibuffer-setup-hook #'eli/vertico-marked-list-clean)
+
+(defun eli/embark-vertico-marked-list ()
+  (when eli/vertico-marked-list
+    (cons (car (embark--vertico-selected)) (reverse eli/vertico-marked-list))))
+
+(add-hook 'embark-candidate-collectors #'eli/embark-vertico-marked-list -100)
+(setq embark-confirm-act-all nil)
+(keymap-set vertico-map "C-SPC" #'eli/vertico-mark)
+(keymap-set vertico-map "C-," #'embark-act-all)
+  )
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult

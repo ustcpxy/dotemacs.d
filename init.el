@@ -56,7 +56,7 @@
 (require 'init-kill-ring)
 (require 'init-blink-search)
 (require 'init-symbol-overlay)
-
+(require 'setup-extra)
 ;;; Keybinding Configuration
 
 (require 'init-keybindings)
