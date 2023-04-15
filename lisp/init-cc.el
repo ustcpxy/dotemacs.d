@@ -20,6 +20,30 @@
 (use-package modern-cpp-font-lock
   :hook (c++-mode . modern-c++-font-lock-mode))
 
+;; 
+(defun cpp-highlight-if-0/1 ()
+  "Modify the face of text in between #if 0 ... #endif."
+  (interactive)
+    (setq cpp-known-face 'default)
+  (setq cpp-unknown-face 'default)
+  (setq cpp-known-writable 't)
+  (setq cpp-unknown-writable 't)
+  (setq cpp-edit-list '(("0" font-lock-comment-face default both)
+                        ("1" default font-lock-comment-face both)))
+
+  (cpp-highlight-buffer t))
+
+(defun custom-c-mode-hook ()
+  (cpp-highlight-if-0/1)
+  (add-hook 'after-save-hook 'cpp-highlight-if-0/1 'append 'local))
+
+;; (add-hook 'c++-mode-hook 'custom-c-mode-hook)
+(add-hook 'c++-ts-mode-hook 'custom-c-mode-hook)
+
+
+
+
+;;;
 (use-package gxref
   :commands (gxref-xref-backend
              gxref-create-db
