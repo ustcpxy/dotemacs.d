@@ -11,6 +11,7 @@
 	 ("C-c d f" . denote-open-or-create)
 	 ("C-c d r" . denote-dired-rename-file))
   :init
+  (setq denote-directory (expand-file-name "~/notesdb/denote/"))
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
 
@@ -23,7 +24,7 @@
                    :kill-buffer t
                    :jump-to-captured t)))
   :config
-  (setq denote-directory (expand-file-name "~/notesdb/denote/"))
+
   (setq denote-known-keywords '("emacs" "entertainment" "reading" "studying"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
@@ -106,7 +107,74 @@ With prefix arg of if DATE-PROMPT is non-nil, prompt for a date."
 (global-set-key (kbd "C-c d J") #'(lambda () (interactive) (my-denote-journal t)))
   )
 
-  
 
+;;; 英文翻译配置
+;; 这个插件依赖于 `posframe' 这个插件
+(use-package posframe
+  :ensure t
+  )
+(require 'sdcv)
+(setq sdcv-say-word-p t)               ;say word after translation
+
+(setq sdcv-dictionary-data-dir (expand-file-name "~/.stardict/dic")) ;setup directory of stardict dictionary
+
+(setq sdcv-dictionary-simple-list    ;setup dictionary list for simple search
+      '("朗道汉英字典5.0"
+        "朗道英汉字典5.0"
+        ))
+
+(setq sdcv-dictionary-complete-list     ;setup dictionary list for complete search
+      '(
+	"朗道英汉字典5.0"
+        "朗道汉英字典5.0"
+	"Longman Dictionary of Contemporary English"
+        ))
+  (setq sdcv-tooltip-timeout 10)
+  (setq sdcv-fail-notify-string "没找到释义")
+(setq sdcv-tooltip-border-width 2)
+
+(global-set-key (kbd "C-,") 'sdcv-search-pointer+)
+
+(use-package fanyi
+  :ensure t
+  :bind-keymap ("C-=" . fanyi-map)
+  :bind (:map fanyi-map
+              ("w" . fanyi-dwim2)
+              ("i" . fanyi-dwim))
+  :init
+  ;; to support `org-store-link' and `org-insert-link'
+ (require 'ol-fanyi)
+  ;; 如果当前指针下有单词，选择当前单词，否则选择剪贴板
+  (with-eval-after-load 'org-capture
+    (add-to-list 'org-capture-templates
+                 '("x" "New word" entry (file+olp+datetree "/home/derek/notesdb/denote/20230419T164630--vocabulary__studying.org" "New")
+                   "* %^{Input the new word:|%(cond ((with-current-buffer (org-capture-get :original-buffer) (thing-at-point 'word 'no-properties))) ((clipboard/get)))}\n\n[[fanyi:%\\1][%\\1]]\n\n[[https://dictionary.cambridge.org/dictionary/english/%\\1][Cambridge：%\\1]]%?"
+                   :tree-type day
+                   :empty-lines 1
+                   :jump-to-captured t)))
+  :config
+  (defvar fanyi-map nil "keymap for `fanyi")
+  (setq fanyi-map (make-sparse-keymap))
+  (setq fanyi-sound-player "mpv")
+  
+  ;; 从剪贴板获取内容
+(defun clipboard/get ()
+  "return the content of clipboard as string"
+  (interactive)
+  (with-temp-buffer
+    (clipboard-yank)
+    (buffer-substring-no-properties (point-min) (point-max))))
+  :custom
+  (fanyi-providers '(;; 海词
+                     fanyi-haici-provider
+                     ;; 有道同义词词典
+                     fanyi-youdao-thesaurus-provider
+                     ;; ;; Etymonline
+                     ;; fanyi-etymon-provider
+                     ;; Longman
+                     fanyi-longman-provider
+                     ;; ;; LibreTranslate
+                     ;; fanyi-libre-provider
+                     )))
 
 (provide 'setup-extra)

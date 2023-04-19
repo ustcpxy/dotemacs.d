@@ -28,3 +28,6 @@
 [submodule "site-lisp/toggle-one-window"]
 	path = site-lisp/toggle-one-window
 	url = https://github.com/manateelazycat/toggle-one-window
+[submodule "site-lisp/sdcv"]
+	path = site-lisp/sdcv
+	url = https://github.com/manateelazycat/sdcv.git
