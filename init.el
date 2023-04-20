@@ -60,5 +60,8 @@
 ;;; Keybinding Configuration
 
 (require 'init-keybindings)
+(if (not (display-graphic-p ))
+    (require 'setup-meow)
+  )
 
 (provide 'init)

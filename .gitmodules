@@ -31,3 +31,6 @@
 [submodule "site-lisp/sdcv"]
 	path = site-lisp/sdcv
 	url = https://github.com/manateelazycat/sdcv.git
+[submodule "site-lisp/meow"]
+	path = site-lisp/meow
+	url = https://github.com/meow-edit/meow.git

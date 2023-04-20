@@ -298,6 +298,9 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 (global-set-key (kbd "ESC <down>") 'end-of-buffer)
 (global-set-key (kbd "M-u") 'undo)
 
+(global-set-key (kbd "M-[") 'beginning-of-defun)
+(global-set-key (kbd "M-]") 'end-of-defun)
+
 
 
 
