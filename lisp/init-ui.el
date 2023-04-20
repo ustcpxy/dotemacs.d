@@ -37,8 +37,9 @@
 (setq custom-safe-themes t)
 (use-package doom-themes
   :init
-  (load-theme 'doom-solarized-light)
+  ;; (load-theme 'doom-solarized-light)
   )
+  (load-theme 'modus-operandi)
 
 ;;; Fonts
 ;; copied from centaur's emacs
