@@ -1,7 +1,7 @@
 ;; setup for extra pacages whicn not builtin -*- lexical-binding: t -*-
 
 (use-package denote
-  :ensure t
+  :ensure nil
   :hook (dired-mode . denote-dired-mode-in-directories)
   :bind (;;("C-c d j" . my-denote-journal)
 	 ("C-c d n" . denote)
