@@ -13,6 +13,7 @@ otherwise in default state."
         (evil-insert-state))))
 
   (setq magit-save-repository-buffers 'dontask)
+  (setq magit-no-confirm t)
 
   (defun my-magit-submodule-add-1 (origfunc url &optional path name &rest args )
     (message "url %s, path %s" url path)
