@@ -145,8 +145,7 @@ object (e.g., within a comment).  In these case, you need to use
   (define-key org-mode-map (kbd "RET")
     'my/org-return)
 
-  (evil-define-key 'normal org-mode-map
-    "+" #'org-cycle-list-bullet)
+  
 
   (setq org-todo-keywords
 	(quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -355,16 +354,8 @@ object (e.g., within a comment).  In these case, you need to use
       (forward-line 1))
     (point-min))
   (add-hook 'org-agenda-finalize-hook 'org-habit-streak-count)
-  )
 
-(use-package evil-org
-  :ensure t
-  :after org
-  :hook (org-mode . evil-org-mode)
-  :hook (org-capture-mode . evil-insert-state)
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  )
 
 ;; (with-eval-after-load 'ox
 ;;   (require 'ox-hugo))
