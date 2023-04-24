@@ -177,4 +177,6 @@ With prefix arg of if DATE-PROMPT is non-nil, prompt for a date."
                      ;; fanyi-libre-provider
                      )))
 
+;;; wgrep
+(require 'wgrep)
 (provide 'setup-extra)
