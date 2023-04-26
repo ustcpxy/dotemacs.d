@@ -15,7 +15,7 @@
       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (use-package avy
-  :bind (("C-:"   . avy-goto-char)
+  :bind (("C-;"   . avy-goto-word-or-subword-1)
          ("C-'"   . avy-goto-char-2)
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)

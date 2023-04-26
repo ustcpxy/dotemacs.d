@@ -43,7 +43,6 @@
 (require 'init-completion)
 
 ;; Core
-;; (require 'init-evil)
 
 (require 'init-matchit)
 (require 'init-git)
