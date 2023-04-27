@@ -179,4 +179,38 @@ With prefix arg of if DATE-PROMPT is non-nil, prompt for a date."
 
 ;;; wgrep
 (require 'wgrep)
+
+;;; consistent structural editing interface
+(repeat-mode 1)
+(defvar structural-edit-map
+  (let ((map (make-sparse-keymap)))
+    (pcase-dolist (`(,k . ,f)
+                   '(("u" . backward-up-list)
+                     ("f" . forward-sexp)
+                     ("b" . backward-sexp)
+                     ("d" . down-list)
+                     ("k" . kill-sexp)
+                     ("n" . sp-next-sexp)
+                     ("p" . sp-previous-sexp)
+                     ("K" . sp-kill-hybrid-sexp)
+                     ("]" . sp-forward-slurp-sexp)
+                     ("[" . sp-backward-slurp-sexp)
+                     ("}" . sp-forward-barf-sexp)
+                     ("{" . sp-backward-barf-sexp)
+                     ("C" . sp-convolute-sexp)
+                     ("J" . sp-join-sexp)
+                     ("S" . sp-split-sexp)
+                     ("R" . sp-raise-sexp)
+                     ("\\" . indent-region)
+                     ("/" . undo)
+                     ("t" . transpose-sexps)
+                     ("x" . eval-defun)))
+      (define-key map (kbd k) f))
+    map))
+
+(map-keymap
+ (lambda (_ cmd)
+   (put cmd 'repeat-map 'structural-edit-map))
+ structural-edit-map)
+
 (provide 'setup-extra)
