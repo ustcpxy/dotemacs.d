@@ -133,7 +133,7 @@ With prefix arg of if DATE-PROMPT is non-nil, prompt for a date."
   (setq sdcv-fail-notify-string "没找到释义")
 (setq sdcv-tooltip-border-width 2)
 
-(global-set-key (kbd "C-,") 'sdcv-search-pointer+)
+(global-set-key (kbd "C-;") 'sdcv-search-pointer+)
 
 (use-package fanyi
   :ensure t
