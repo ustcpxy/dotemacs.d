@@ -165,6 +165,8 @@ object (e.g., within a comment).  In these case, you need to use
   ;; (setq org-refile-targets '((org-agenda-files :maxlevel . 5) (myroamfiles :maxlevel . 5)))
   (setq org-refile-targets '((org-agenda-files :maxlevel . 5)))
   (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil) ;; if outline-path is 'file, this variable must be set nil
 
   (setq org-capture-templates
 	`(
