@@ -42,16 +42,6 @@
 
 
 
-
-;;;
-(use-package gxref
-  :commands (gxref-xref-backend
-             gxref-create-db
-             gxref-update-db
-             gxref-single-update-db
-             gxref-set-project-dir)
-  )
-
 ;; @https://emacs-china.org/t/treesit-treesit-explore-mode/23313/8
 (use-package treesit
   :ensure nil
@@ -68,6 +58,9 @@
              (python-mode     . python-ts-mode)
              (sh-mode         . bash-ts-mode)
              (typescript-mode . typescript-ts-mode))))
+
+
+(require 'color-rg)
 
 
 (provide 'init-cc)

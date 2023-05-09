@@ -3,6 +3,10 @@
 (global-auto-revert-mode t)
 (which-key-mode)
 
+;; support Trash
+(setq delete-by-moving-to-trash t)
+
+
 (use-package smartparens
   :init
   (smartparens-global-mode t)
