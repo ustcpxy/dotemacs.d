@@ -40,3 +40,6 @@
 [submodule "site-lisp/Emacs-wgrep"]
 	path = site-lisp/Emacs-wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep
+[submodule "site-lisp/clue"]
+	path = site-lisp/clue
+	url = https://github.com/AmaiKinono/clue
