@@ -57,7 +57,7 @@
 (require 'init-symbol-overlay)
 (require 'setup-extra)
 ;;; Keybinding Configuration
-
+(require 'consult-citre)
 (require 'init-keybindings)
 (if (not (display-graphic-p ))
     (require 'setup-meow)

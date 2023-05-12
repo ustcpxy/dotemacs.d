@@ -3,6 +3,8 @@
 (require 'citre)
 (require 'citre-config)
 
+(require 'clue)
+
 ;; @https://emacs-china.org/t/citre-ctags/17604/534
 (defun filter-imenu (imenu-alist)
   (seq-filter (lambda (item) (member (car item) '("function" "class")))
@@ -20,13 +22,14 @@
 (defun my--push-point-to-xref-marker-stack (&rest r)
   (xref-push-marker-stack (point-marker)))
 (dolist (func '(find-function
-                counsel-imenu
-                helm-imenu
+                consult-imenu
                 projectile-grep
                 helm-grep-ag
-                counsel-rg
+                consult-ripgrep
                 lsp-ivy-workspace-symbol
                 citre-jump))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
+
+
 
 (provide 'init-citre)
