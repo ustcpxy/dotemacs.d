@@ -322,6 +322,9 @@
   ;; See also `corfu-excluded-modes'.
   :init
   (global-corfu-mode)
+  (corfu-indexed-mode)
+  (setq corfu-indexed-start 1)
+  (setq corfu-count 9)
   :config
     (defun corfu-move-to-minibuffer ()
       (interactive)
@@ -340,8 +343,26 @@
               (bound-and-true-p vertico--input))
     ;; (setq-local corfu-auto nil) Enable/disable auto completion
     (corfu-mode 1)))
-(add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+    (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+    ;; Bind C-num and M-num for convenience.
+    (cl-loop with map = corfu-map
+	     for i from 1 to 9 
+	     do (let ((idx (- i 1)))
+		  (define-key map (kbd (format "M-%d" i)) (lambda () (interactive)
+							    (message "idx %d" idx)
+							    (setq corfu--index idx)
+							    (call-interactively #'corfu-insert)))
+	     	  (define-key map (kbd (format "C-%d" i)) (lambda () (interactive)
+							    (setq corfu--index idx)
+							    (call-interactively #'corfu-complete)))))
+    (keymap-set corfu-map "M-q" #'corfu-quick-complete)
+    (keymap-set corfu-map "C-q" #'corfu-quick-insert)
+    
   )
+
+
+
 
 ;; Add extensions
 (use-package cape
