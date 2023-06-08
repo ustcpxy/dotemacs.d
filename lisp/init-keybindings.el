@@ -82,4 +82,7 @@ all hooks after it are ignored.")
 (global-set-key (kbd "M-[") 'beginning-of-defun)
 (global-set-key (kbd "M-]") 'end-of-defun)
 
+(global-set-key (kbd "M-RET") 'vertico-repeat)
+(global-set-key (kbd "M-<tab>") 'consult-buffer)
+
 (provide 'init-keybindings)

@@ -31,8 +31,6 @@
   (define-key vertico-map [backspace] #'vertico-directory-delete-char)
   (define-key vertico-map (kbd "s-SPC") #'+vertico/embark-preview)
 
-  (keymap-set vertico-map "M-'" #'vertico-repeat)
-
   (keymap-set vertico-map "?" #'minibuffer-completion-help)
   (keymap-set vertico-map "M-RET" #'minibuffer-force-complete-and-exit)
   (keymap-set vertico-map "M-TAB" #'minibuffer-complete)
