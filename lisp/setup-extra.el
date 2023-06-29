@@ -37,7 +37,7 @@
   ;;; 配置目录结构，让其与 logseq 的兼容，这样就能通过 icloud 在移动端读取笔记
   (setq denote-journal-home (expand-file-name "journals/" denote-directory))
   (setq denote-note-home (expand-file-name "denote/" denote-directory))
-  
+
   ;; Pick dates, where relevant, with Org's advanced interface:
   (setq denote-date-prompt-use-org-read-date t)
 
@@ -79,34 +79,34 @@
   ;; @https://gsj987.github.io/posts/take-note-with-denote/
   ;;; 根据日期创建或打开一篇 journal
   (defun my-denote-journal-with-date (date)
-	"Create an entry tagged 'journal' and the other 'keywords' with the date as its title, there will be only one entry per day."
+    "Create an entry tagged 'journal' and the other 'keywords' with the date as its title, there will be only one entry per day."
     ;;; 如果没传日期，则使用日历选择一个日期创建
-	(interactive (list (denote-date-prompt)))
-	(let* ((formatted-date (format-time-string "%Y-%m-%d" (denote--valid-date date)))
-		   (entry-of-date-regex (concat "^[^\\.].*" formatted-date))
-		   (entry-of-date (car (directory-files denote-journal-home nil entry-of-date-regex)))
-		   )
+    (interactive (list (denote-date-prompt)))
+    (let* ((formatted-date (format-time-string "%Y-%m-%d" (denote--valid-date date)))
+	   (entry-of-date-regex (concat "^[^\\.].*" formatted-date))
+	   (entry-of-date (car (directory-files denote-journal-home nil entry-of-date-regex)))
+	   )
 
-	  (if entry-of-date
-		  (find-file (expand-file-name entry-of-date denote-journal-home))
-		(denote
-		 formatted-date
-		 '("journal")
-		 nil
-		 denote-journal-home)
-		)))
+      (if entry-of-date
+	  (find-file (expand-file-name entry-of-date denote-journal-home))
+	(denote
+	 formatted-date
+	 '("journal")
+	 nil
+	 denote-journal-home)
+	)))
 
-  ;;; 创建或打开今天的 journal 
+  ;;; 创建或打开今天的 journal
   (defun my-denote-journal-for-today ()
     "Write a journal entry for today."
     (interactive)
     (my-denote-journal-with-date
      (format-time-string "%Y-%m-%dT00:00:00")))
 
-    (defun my-denote-split-org-subtree-to-journal()
+  (defun my-denote-split-org-subtree-to-journal()
     "Refile the org subtree as a node of the journal"
     (interactive)
-    
+
     (org-copy-subtree)
     (delete-region (org-entry-beginning-position) (org-end-of-subtree))
     (my-denote-journal-for-today)
@@ -114,27 +114,27 @@
     (org-return)
     (org-yank))
 
-      (defun my-denote-note ()
-     "Create a note to pages, need to provide a title and tag"
+  (defun my-denote-note ()
+    "Create a note to pages, need to provide a title and tag"
     (interactive)
     (let ((denote-prompts '(title keywords))
           (denote-directory denote-note-home))
       (call-interactively #'denote-open-or-create)))
 
- (defun my-denote-org-capture()
+  (defun my-denote-org-capture()
     "Capture a note to pages"
     (interactive)
     (let ((denote-directory denote-note-home))
       (denote-org-capture)))
 
 
- (defun my-denote-split-org-subtree-to-note ()
+  (defun my-denote-split-org-subtree-to-note ()
     "Create new Denote note as an Org file using current Org subtree."
     (interactive)
     (let* ((keywords (denote--keywords-prompt))
-          (text (org-get-entry))
-          (heading (org-get-heading :no-tags :no-todo :no-priority :no-comment))
-          (tags (org-get-tags)))
+           (text (org-get-entry))
+           (heading (org-get-heading :no-tags :no-todo :no-priority :no-comment))
+           (tags (org-get-tags)))
 
       (delete-region (org-entry-beginning-position) (org-end-of-subtree))
 
@@ -180,8 +180,8 @@
         "朗道汉英字典5.0"
 	"Longman Dictionary of Contemporary English"
         ))
-  (setq sdcv-tooltip-timeout 10)
-  (setq sdcv-fail-notify-string "没找到释义")
+(setq sdcv-tooltip-timeout 10)
+(setq sdcv-fail-notify-string "没找到释义")
 (setq sdcv-tooltip-border-width 2)
 
 (global-set-key (kbd "C-;") 'sdcv-search-pointer+)
@@ -194,7 +194,7 @@
               ("i" . fanyi-dwim))
   :init
   ;; to support `org-store-link' and `org-insert-link'
- (require 'ol-fanyi)
+  (require 'ol-fanyi)
   ;; 如果当前指针下有单词，选择当前单词，否则选择剪贴板
   (with-eval-after-load 'org-capture
     (add-to-list 'org-capture-templates
@@ -207,14 +207,14 @@
   (defvar fanyi-map nil "keymap for `fanyi")
   (setq fanyi-map (make-sparse-keymap))
   (setq fanyi-sound-player "mpv")
-  
+
   ;; 从剪贴板获取内容
-(defun clipboard/get ()
-  "return the content of clipboard as string"
-  (interactive)
-  (with-temp-buffer
-    (clipboard-yank)
-    (buffer-substring-no-properties (point-min) (point-max))))
+  (defun clipboard/get ()
+    "return the content of clipboard as string"
+    (interactive)
+    (with-temp-buffer
+      (clipboard-yank)
+      (buffer-substring-no-properties (point-min) (point-max))))
   :custom
   (fanyi-providers '(;; 海词
                      fanyi-haici-provider
@@ -263,5 +263,20 @@
  (lambda (_ cmd)
    (put cmd 'repeat-map 'structural-edit-map))
  structural-edit-map)
+
+(use-package apheleia
+  :ensure t
+  :init
+  ;; (apheleia-global-mode +1)
+
+  :hook
+  (prog-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'clang-format apheleia-formatters)
+        '("git" "clang-format" "--force" "--quiet" (buffer-file-name)))
+  
+  (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
+  )
+
 
 (provide 'setup-extra)

@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(fanyi embark-consult ace-pinyin gxref super-save org-roam doom-themes which-key easy-kill all-the-icons pangu-spacing yasnippet popper orderless denote valign modern-cpp-font-lock cape avy-zap undo-tree default-text-scale doom-modeline magit use-package markdown-mode marginalia evil-collection smartparens rime ace-window no-littering general browse-kill-ring vertico evil-org corfu)))
+   '(apheleia embark-consult ace-pinyin super-save org-roam loopy doom-themes cape easy-kill all-the-icons corfu pangu-spacing popper valign modern-cpp-font-lock avy-zap undo-tree format-all default-text-scale doom-modeline magit use-package markdown-mode orderless fanyi evil-collection rime marginalia smartparens which-key ace-window no-littering general vertico browse-kill-ring evil-org yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
