@@ -3,22 +3,23 @@
 (use-package denote
   :ensure nil
   :hook (dired-mode . denote-dired-mode-in-directories)
-  :bind (;;("C-c d j" . my-denote-journal)
+  :bind (("C-c d j" . my-denote-journal-for-today)
+	 ("C-c d J" . my-denote-journal-with-date)
 	 ("C-c d n" . denote)
 	 ("C-c d d" . denote-date)
 	 ("C-c d t" . denote-type)
 	 ("C-c d s" . denote-subdirectory)
-	 ("C-c d f" . denote-open-or-create)
+	 ("C-c d f" . my-denote-note)
 	 ("C-c d r" . denote-dired-rename-file))
   :init
-  (setq denote-directory (expand-file-name "~/notesdb/denote/"))
+  (setq denote-directory (expand-file-name "~/notesdb/"))
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
 
     (add-to-list 'org-capture-templates
 		 '("n" "New note (with denote.el)" plain
                    (file denote-last-path)
-                   #'denote-org-capture
+                   #'my-denote-org-capture
                    :no-save t
                    :immediate-finish nil
                    :kill-buffer t
@@ -33,12 +34,16 @@
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)
 
+  ;;; 配置目录结构，让其与 logseq 的兼容，这样就能通过 icloud 在移动端读取笔记
+  (setq denote-journal-home (expand-file-name "journals/" denote-directory))
+  (setq denote-note-home (expand-file-name "denote/" denote-directory))
+  
   ;; Pick dates, where relevant, with Org's advanced interface:
   (setq denote-date-prompt-use-org-read-date t)
 
 
-  ;; Read this manual for how to specify `denote-templates'.  We do not
-  ;; include an example here to avoid potential confusion.
+  ;; Read this manual for how to specify `denote-templates'.  We do
+  ;; not include an example here to avoid potential confusion.
 
 
   ;; We allow multi-word keywords by default.  The author's personal
@@ -56,7 +61,7 @@
 
   ;; If you use Markdown or plain text files (Org renders links as buttons
   ;; right away)
-  (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
+  ;; (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
 
   ;; We use different ways to specify a path for demo purposes.
   (setq denote-dired-directories
@@ -70,41 +75,87 @@
   ;; OR if only want it in `denote-dired-directories':
   (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
 
-  ;; (defun my-denote-journal ()
-;; "Create an entry tagged 'journal' with the date as its title."
-;;     (interactive)
-;;     (denote
-;;    (format-time-string "%Y-%m-%d") ; "%A %e %B %Y" format like Tuesday 14 June 2022
-;;    '("journal"))
-  
-;;     )
-  ;; see https://github.com/protesilaos/denote/issues/95
-  (defun first-file-with-substring (dir substring)
-  "Return the first file in DIR containing SUBSTRING.
-Return nil if there is no files with SUBSTRING in its name."
-  (let ((files (file-expand-wildcards (concat dir "*" substring "*"))))
-    (when (>= (length files) 1)
-      (car files))))
 
-(defun my-denote-journal (&optional date-prompt)
-  "Add or modify today's journal entry.
+  ;; @https://gsj987.github.io/posts/take-note-with-denote/
+  ;;; 根据日期创建或打开一篇 journal
+  (defun my-denote-journal-with-date (date)
+	"Create an entry tagged 'journal' and the other 'keywords' with the date as its title, there will be only one entry per day."
+    ;;; 如果没传日期，则使用日历选择一个日期创建
+	(interactive (list (denote-date-prompt)))
+	(let* ((formatted-date (format-time-string "%Y-%m-%d" (denote--valid-date date)))
+		   (entry-of-date-regex (concat "^[^\\.].*" formatted-date))
+		   (entry-of-date (car (directory-files denote-journal-home nil entry-of-date-regex)))
+		   )
 
-With prefix arg of if DATE-PROMPT is non-nil, prompt for a date."
-  (interactive "P")
-  (let* ((denote-directory (expand-file-name "~/notesdb/denote/"))  ; I don't keep them in the same place as my other notes.
-         ;; (denote-file-type 'markdown-yaml)
-         ;; (time (org-read-date nil t))
-         ;; (title (format-time-string "%A %-d %B %Y" time))
-	          (title (format-time-string "%Y-%m-%d"))
+	  (if entry-of-date
+		  (find-file (expand-file-name entry-of-date denote-journal-home))
+		(denote
+		 formatted-date
+		 '("journal")
+		 nil
+		 denote-journal-home)
+		)))
 
-         (file-name-string (concat (replace-regexp-in-string " " "-" (downcase title)) "__journal"))
-         (existing-journal-entry (first-file-with-substring (denote-directory) file-name-string)))
-    (if existing-journal-entry
-        (find-file existing-journal-entry)
-      (denote title '("journal")))))
+  ;;; 创建或打开今天的 journal 
+  (defun my-denote-journal-for-today ()
+    "Write a journal entry for today."
+    (interactive)
+    (my-denote-journal-with-date
+     (format-time-string "%Y-%m-%dT00:00:00")))
 
-(global-set-key (kbd "C-c d j") #'my-denote-journal)
-(global-set-key (kbd "C-c d J") #'(lambda () (interactive) (my-denote-journal t)))
+    (defun my-denote-split-org-subtree-to-journal()
+    "Refile the org subtree as a node of the journal"
+    (interactive)
+    
+    (org-copy-subtree)
+    (delete-region (org-entry-beginning-position) (org-end-of-subtree))
+    (my-denote-journal-for-today)
+    (end-of-buffer)
+    (org-return)
+    (org-yank))
+
+      (defun my-denote-note ()
+     "Create a note to pages, need to provide a title and tag"
+    (interactive)
+    (let ((denote-prompts '(title keywords))
+          (denote-directory denote-note-home))
+      (call-interactively #'denote-open-or-create)))
+
+ (defun my-denote-org-capture()
+    "Capture a note to pages"
+    (interactive)
+    (let ((denote-directory denote-note-home))
+      (denote-org-capture)))
+
+
+ (defun my-denote-split-org-subtree-to-note ()
+    "Create new Denote note as an Org file using current Org subtree."
+    (interactive)
+    (let* ((keywords (denote--keywords-prompt))
+          (text (org-get-entry))
+          (heading (org-get-heading :no-tags :no-todo :no-priority :no-comment))
+          (tags (org-get-tags)))
+
+      (delete-region (org-entry-beginning-position) (org-end-of-subtree))
+
+      (if (> (length tags) 0)
+          (dolist (tag tags)
+            (push tag keywords)))
+
+      (let (path)
+        (save-window-excursion
+          (denote heading keywords nil denote-note-home)
+          (insert text)
+          (save-buffer)
+          (setq path (buffer-file-name)))
+        (denote-link path))
+      ))
+
+  (defun my-denote-link-or-create-note()
+    "Link or create a note"
+    (interactive)
+    (let ((denote-directory denote-note-home))
+      (call-interactively #'denote-link-or-create)))
   )
 
 
