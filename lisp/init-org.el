@@ -39,21 +39,21 @@
   ;; For tag searches ignore tasks with scheduled and deadline dates
   (setq org-agenda-tags-todo-honor-ignore-options t)
 
-    (setq org-return-follows-link t)
+  (setq org-return-follows-link t)
 
 
-        (setq org-confirm-babel-evaluate nil) 
-     ;; plantuml and dot
-(setq plantuml-jar-path (concat (expand-file-name "site-lisp/" user-emacs-directory) "plantuml.jar"))
-(setq org-plantuml-jar-path plantuml-jar-path)
+  (setq org-confirm-babel-evaluate nil) 
+  ;; plantuml and dot
+  (setq plantuml-jar-path (concat (expand-file-name "site-lisp/" user-emacs-directory) "plantuml.jar"))
+  (setq org-plantuml-jar-path plantuml-jar-path)
 
-(add-to-list
-  'org-src-lang-modes '("plantuml" . plantuml))
+  (add-to-list
+   'org-src-lang-modes '("plantuml" . plantuml))
 
-;; (add-to-list 'org-babel-load-languages '(plantuml . t))
-(org-babel-do-load-languages
-      'org-babel-load-languages
-      '((plantuml . t)))
+  ;; (add-to-list 'org-babel-load-languages '(plantuml . t))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
 
 
   (add-to-list 'org-modules 'org-habit)
@@ -143,7 +143,7 @@ object (e.g., within a comment).  In these case, you need to use
 
 
   (define-key org-mode-map (kbd "RET")
-    'my/org-return)
+	      'my/org-return)
 
   
 
@@ -303,28 +303,28 @@ object (e.g., within a comment).  In these case, you need to use
 			 (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
 			 (org-tags-match-list-sublevels nil))))
 		 nil)
-      ("g" "Get Things Done (GTD)"
-         ((agenda ""
-                  ((org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'deadline))
-                   (org-deadline-warning-days 0)))
-          (todo "NEXT"
-                ((org-agenda-skip-function
-                  '(org-agenda-skip-entry-if 'deadline))
-                 (org-agenda-prefix-format "  %i %-12:c [%e] ")
-                 (org-agenda-overriding-header "\nTasks\n")))
-          (agenda ""
-                  ((org-agenda-entry-types '(:deadline))
-                   (org-agenda-format-date "")
-                   (org-deadline-warning-days 7)
-                   (org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'notregexp "\\* NEXT"))
-                   (org-agenda-overriding-header "\nDeadlines")))
-          (tags-todo "inbox"
-                     ((org-agenda-prefix-format "  %?-12t% s")
-                      (org-agenda-overriding-header "\nInbox\n")))
-          (tags "CLOSED>=\"<today>\""
-                ((org-agenda-overriding-header "\nCompleted today\n")))))
+		("g" "Get Things Done (GTD)"
+		 ((agenda ""
+			  ((org-agenda-skip-function
+			    '(org-agenda-skip-entry-if 'deadline))
+			   (org-deadline-warning-days 0)))
+		  (todo "NEXT"
+			((org-agenda-skip-function
+			  '(org-agenda-skip-entry-if 'deadline))
+			 (org-agenda-prefix-format "  %i %-12:c [%e] ")
+			 (org-agenda-overriding-header "\nTasks\n")))
+		  (agenda ""
+			  ((org-agenda-entry-types '(:deadline))
+			   (org-agenda-format-date "")
+			   (org-deadline-warning-days 7)
+			   (org-agenda-skip-function
+			    '(org-agenda-skip-entry-if 'notregexp "\\* NEXT"))
+			   (org-agenda-overriding-header "\nDeadlines")))
+		  (tags-todo "inbox"
+			     ((org-agenda-prefix-format "  %?-12t% s")
+			      (org-agenda-overriding-header "\nInbox\n")))
+		  (tags "CLOSED>=\"<today>\""
+			((org-agenda-overriding-header "\nCompleted today\n")))))
 		)))
 
 
@@ -359,8 +359,41 @@ object (e.g., within a comment).  In these case, you need to use
 
   )
 
-;; (with-eval-after-load 'ox
-;;   (require 'ox-hugo))
+;; for creating new hugo post
+;; see @https://liujiacai.net/blog/2020/12/05/hexo-to-hugo/#headline-11
+(defun my/hugo-newpost (slug title tags categories)
+  (interactive "sSlug: \nsTitle: \nsTags: \nsCategories: ")
+  (let* ((now (current-time))
+	 (basename (concat (format-time-string "%Y-%m-%d-" now)
+			   slug ".org"))
+	 (postdir (expand-file-name "~/myblog/content/posts/"))
+	 (filename (expand-file-name basename postdir))
+	 (create-date (format-time-string "%Y-%m-%d" now)))
+    (when (file-exists-p filename)
+      (error "%s already exists!" filename))
+    (find-file filename)
+    (insert
+     (format "#+TITLE: %s\n#+DATE: %s\n#+LASTMOD: %s\n#+TAGS[]: %s\n#+CATEGORIES[]: %s\n"
+             title create-date create-date tags categories))
+    (goto-char (point-max))
+    (save-buffer)))
+
+(setq time-stamp-active t
+      time-stamp-start "^#\\+lastmod: [ \t]*"
+      time-stamp-end "$"
+      time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+(add-hook 'before-save-hook 'time-stamp nil)
+
+(defun my/search-random-someday ()
+  "Search all agenda files for SOMEDAY and jump to a random item"
+  (interactive)
+  (let* ((todos '("SOMEDAY"))
+         ;; (searches (mapcar (lambda (x) (format "+TODO=\"%s\"" x)) todos))
+         (joint-search (string-join todos "|"))
+         (org-agenda-custom-commands `(("g" tags ,joint-search))))
+    (org-agenda nil "g")
+    (let ((nlines (count-lines (point-min) (point-max))))
+      (goto-line (random nlines)))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

@@ -34,6 +34,7 @@
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)
 
+  ;; @https://gsj987.github.io/posts/take-note-with-denote/
   ;;; 配置目录结构，让其与 logseq 的兼容，这样就能通过 icloud 在移动端读取笔记
   (setq denote-journal-home (expand-file-name "journals/" denote-directory))
   (setq denote-note-home (expand-file-name "denote/" denote-directory))
