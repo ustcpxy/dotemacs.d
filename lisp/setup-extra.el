@@ -114,7 +114,27 @@
     (end-of-buffer)
     (org-return)
     (org-yank))
+  
+  (defun my-denote-weekly ()
+    "Create an entry tagged 'weekly' with the date as its title.
+If a journal for the current day exists, visit it.  If multiple
+entries exist, prompt with completion for a choice between them.
+Else create a new file."
+    (interactive)
+    (let* ((week (format-time-string "%Y Week%W"))
+           (string (denote-sluggify week))
+           (files (denote-directory-files-matching-regexp string)))
+      (cond
+       ((> (length files) 1)
+	(find-file (completing-read "Select file: " files nil :require-match)))
+       (files
+	(find-file (car files)))
+       (t
+	(denote
+	 week
+	 '("weekly-review"))))))
 
+  
   (defun my-denote-note ()
     "Create a note to pages, need to provide a title and tag"
     (interactive)
