@@ -300,5 +300,30 @@ Else create a new file."
   (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
   )
 
+(use-package yasnippet
+  :ensure t
+  :init
+  (yas-global-mode 1)
+  :config
+  (add-to-list 'yas-snippet-dirs (locate-user-emacs-file "snippets")))
+
+
+(use-package autoinsert
+  :init
+  ;; Don't want to be prompted before insertion:
+  (setq auto-insert-query nil)
+
+  (setq auto-insert-directory (locate-user-emacs-file "snippets"))
+  (add-hook 'find-file-hook 'auto-insert)
+  (auto-insert-mode 1)
+
+  :config
+  (defun my/autoinsert-yas-expand()
+  "Replace text in yasnippet template."
+  (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+  
+  (define-auto-insert "\\.c?$" ["default-c.c" my/autoinsert-yas-expand]))
+
+(load "gendoxy.el")
 
 (provide 'setup-extra)
