@@ -55,8 +55,9 @@
   ;;          return (set-face-attribute 'default nil :font font))
   ;; font family candidate ("DejaVu Sans Mono" "Source Code Pro")
   ;; (set-face-attribute 'default nil :font (font-spec :family "monospace" :size 16))
-  (set-face-attribute 'default nil :font (font-spec :family "DejaVu Sans Mono") :height 150)
-
+  ;;(set-face-attribute 'default nil :font (font-spec :family "DejaVu Sans Mono") :height 150)
+  (set-face-attribute 'default nil :font (font-spec :family "Microsoft Yahei") :height 150)
+  
   ;; Specify font for all unicode characters
   ;; (cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
   ;;          when (font-installed-p font)
@@ -81,7 +82,7 @@
   ;;                   (setq face-font-rescale-alist `((,font . 1.3)))
   ;;                   (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font))))
 
-  (set-fontset-font t 'han "WenQuanYi Micro Hei")
+  ;; (set-fontset-font t 'han "WenQuanYi Micro Hei")
 )
 
 ;; Easily adjust the font size in all frames

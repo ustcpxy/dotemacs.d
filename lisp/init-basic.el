@@ -8,6 +8,7 @@
 ;; support Trash
 (setq delete-by-moving-to-trash t)
 
+(setq make-backup-files nil)
 
 (use-package smartparens
   :init

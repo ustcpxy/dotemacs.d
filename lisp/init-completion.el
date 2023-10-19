@@ -261,14 +261,32 @@
   ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
   ;; For some commands and buffer sources it is useful to configure the
   ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  ;; (consult-customize
+  ;;  consult-theme
+  ;;  :preview-key '(:debounce 0.2 any)
+  ;;  consult-ripgrep consult-git-grep consult-grep
+  ;;  consult-bookmark consult-recent-file consult-xref
+  ;;  consult--source-bookmark consult--source-recent-file
+  ;;  consult--source-project-recent-file
+  ;;  :preview-key (kbd "M-."))
+
   (consult-customize
-   consult-theme
-   :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-recent-file
-   consult--source-project-recent-file
-   :preview-key (kbd "M-."))
+ consult-ripgrep consult-git-grep consult-grep
+ consult-bookmark consult-recent-file consult-xref
+ consult--source-bookmark consult--source-file-register
+ consult--source-recent-file consult--source-project-recent-file
+ ;; my/command-wrapping-consult    ;; disable auto previews inside my command
+ :preview-key '(:debounce 0.4 any) ;; Option 1: Delay preview
+ ;; :preview-key "M-.")            ;; Option 2: Manual preview
+  )
+  ;; Preview on any key press, but delay 0.5s
+(consult-customize consult-theme :preview-key '(:debounce 0.5 any))
+;; Preview immediately on M-., on up/down after 0.5s, on any other key after 1s
+(consult-customize consult-theme
+                   :preview-key
+                   '("M-."
+                     :debounce 0.5 "<up>" "<down>"
+                     :debounce 1 any))
 
   (consult-customize
    consult-line-thing-at-point
