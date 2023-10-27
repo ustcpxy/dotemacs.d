@@ -405,4 +405,10 @@ By default, duplicate current line below.
 If mark is activate, duplicate region lines below."
   (interactive)
   (duplicate-line-or-region-above t))
+
+(defun complete-dash-in-c-comment (arg)
+  (print (make-string (- 74 (length arg)) ?- ))
+    
+    )
+
 (provide 'init-funcs)

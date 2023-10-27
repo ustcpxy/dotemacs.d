@@ -1,0 +1,4 @@
+# key: csp
+# name: insert C comments
+# --
+/* $1 ${1:$(complete-dash-in-c-comment yas-text)} */
