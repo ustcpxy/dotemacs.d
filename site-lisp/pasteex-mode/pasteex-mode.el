@@ -147,8 +147,19 @@
   (setq img-dir (concat (file-name-directory (buffer-file-name)) "img/"))
   (unless (file-directory-p img-dir)
     (make-directory img-dir))
-  ;; build image file name (use `pasteex_screenshot' as prefix, following buffer name, following datetime string)
-  (setq img-file-name (format "scr_%s_%s.png" (file-name-base (buffer-file-name)) (format-time-string "%Y%m%d%H%M%S")))
+
+  ;; 指定图片名称
+  (setq png-name (read-string "Input a picture name (default empty)" ) )
+    ;; build image file name (use `pasteex_screenshot' as prefix, following buffer name, following datetime string)
+  ;; (setq img-file-name (format "scr_%s_%s.png" (file-name-base (buffer-file-name)) (format-time-string "%Y%m%d%H%M%S")))
+  (if (string-empty-p png-name)
+        (setq img-file-name (format "scr_%s.png" (format-time-string "%Y%m%d%H%M%S")))
+
+        (setq img-file-name (format "scr_%s_%s.png" png-name (format-time-string "%Y%m%d%H%M%S")))
+
+      )
+
+
   (setq full-img-path (concat img-dir img-file-name))
   ;; save image file to img-dir by invoking pasteex executable command
   (let* ((shell-command-str ""))
@@ -168,7 +179,8 @@
     (delete-file relative-img-file-path)
     (user-error "There is no image on clipboard."))
   ;; image display name
-  (setq display-name (read-string "Input a display name (default empty): "))
+  ;; (setq display-name (read-string "Input a display name (default empty): "))
+  (setq display-name "")
   ;; insert image file path (relative path)
   (insert (pasteex-build-img-file-insert-path relative-img-file-path display-name)))
 

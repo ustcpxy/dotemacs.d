@@ -41,6 +41,7 @@
 
   (setq org-return-follows-link t)
 
+  (setq org-startup-with-inline-images t)
 
   (setq org-confirm-babel-evaluate nil) 
   ;; plantuml and dot
