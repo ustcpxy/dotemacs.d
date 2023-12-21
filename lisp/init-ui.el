@@ -39,7 +39,50 @@
   :init
   ;; (load-theme 'doom-solarized-light)
   )
-  (load-theme 'modus-operandi)
+  ;; (load-theme 'modus-operandi)
+  ;; (load-theme 'modus-vivendi)
+
+;; 随机选择主题
+;; 亮色主题和暗色主题
+;; (setq day-theme-list '( modus-operandi ef-day ef-spring ef-summer))
+;; (setq dark-theme-list '( modus-vivendi ef-night ef-autumn ef-winter))
+(setq day-theme-list '( modus-operandi ))
+(setq dark-theme-list '( modus-vivendi ))
+
+;; 随机选取主题
+(defun my-random-element (my-list)
+  "Return a random element from MY-LIST."
+  (let ((my-length (length my-list))
+        (my-random-index (random (length my-list))))
+    (nth my-random-index my-list)))
+
+;; 根据时间选择亮/暗主题
+(defun synchronize-theme ()
+  (setq hour
+	(string-to-number
+	 (substring (current-time-string) 11 13)))  ;; 获取小时，24小时制
+  (if (member hour (number-sequence 6 18))  ;; 判断时间在早上6点到下午6点
+      (progn
+	(setq now (my-random-element day-theme-list))
+	(setq lst (my-random-element dark-theme-list))
+	)
+    (setq now (my-random-element dark-theme-list))
+    (setq lst (my-random-element day-theme-list))
+    )
+  (mapc 'disable-theme custom-enabled-themes)
+  (load-theme now t))
+(synchronize-theme) ;; 启动时立即执行一次
+;; 每小时执行一次
+(let* ((current-minutes
+	(string-to-number (substring (current-time-string) 14 16)))
+       (current-seconds
+	(string-to-number (substring (current-time-string) 17 20)))
+       (remain-seconds
+	;; remaining seconds = 3600 - 60 * min - sec
+	(- 3600 (* 60 current-minutes) current-seconds))
+       )
+  (run-with-timer remain-seconds 3600 'synchronize-theme))
+
 
 ;;; Fonts
 ;; copied from centaur's emacs

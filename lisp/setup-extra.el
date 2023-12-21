@@ -326,4 +326,13 @@ Else create a new file."
 
 (load "gendoxy.el")
 
+
+;; 支持直接复制图片到emacs buffer，图片自动保持到buffer文件的相对目录 ./img/目录下
+(if (eq system-type 'windows-nt)
+    (progn
+    (setq pasteex-executable-path (expand-file-name "~/PasteEx/PasteEx.exe"))
+  (require 'pasteex-mode)
+  (global-set-key (kbd "C-x p i") 'pasteex-image)
+  )
+)
 (provide 'setup-extra)
