@@ -3,6 +3,8 @@
 (global-auto-revert-mode t)
 (which-key-mode)
 
+(setq make-backup-files nil)
+
 ;; support Trash
 (setq delete-by-moving-to-trash t)
 
@@ -14,9 +16,9 @@
   (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
   (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
   :config
-    (sp-with-modes
-        '(c++-mode objc-mode c-mode)
-      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+  (sp-with-modes
+      '(c++-mode objc-mode c-mode)
+    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (use-package avy
   :bind (("C-,"   . avy-goto-word-or-subword-1)
@@ -118,4 +120,4 @@
 
 (provide 'init-basic)
 
-				       
+

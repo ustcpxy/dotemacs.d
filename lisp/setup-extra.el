@@ -121,9 +121,10 @@ If a journal for the current day exists, visit it.  If multiple
 entries exist, prompt with completion for a choice between them.
 Else create a new file."
     (interactive)
-    (let* ((week (format-time-string "%Y Week%W"))
-           (string (denote-sluggify week))
-           (files (denote-directory-files-matching-regexp string)))
+    (let* ((denote-directory denote-note-home)
+	   (week (format-time-string "%Y Week%W"))
+	   (string (denote-sluggify week))
+	   (files (denote-directory-files-matching-regexp string)))
       (cond
        ((> (length files) 1)
 	(find-file (completing-read "Select file: " files nil :require-match)))
