@@ -44,7 +44,7 @@
 
 ;; Core
 
-(require 'init-matchit)
+;;(require 'init-matchit)
 (require 'init-git)
 (require 'init-org)
 (require 'init-pkms)
