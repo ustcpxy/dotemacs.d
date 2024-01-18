@@ -61,7 +61,7 @@
   (setq hour
 	(string-to-number
 	 (substring (current-time-string) 11 13)))  ;; 获取小时，24小时制
-  (if (member hour (number-sequence 6 18))  ;; 判断时间在早上6点到下午6点
+  (if (member hour (number-sequence 6 17))  ;; 判断时间在早上6点到下午6点
       (progn
 	(setq now (my-random-element day-theme-list))
 	(setq lst (my-random-element dark-theme-list))
