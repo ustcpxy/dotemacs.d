@@ -34,12 +34,15 @@
 [submodule "site-lisp/meow"]
 	path = site-lisp/meow
 	url = https://github.com/meow-edit/meow.git
-[submodule "site-lisp/denote"]
-	path = site-lisp/denote
-	url = https://github.com/protesilaos/denote
 [submodule "site-lisp/Emacs-wgrep"]
 	path = site-lisp/Emacs-wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep
 [submodule "site-lisp/clue"]
 	path = site-lisp/clue
 	url = https://github.com/AmaiKinono/clue
+[submodule "denote"]
+	path = denote
+	url = https://gitlab.com/protesilaos/denote
+[submodule "site-lisp/denote"]
+	path = site-lisp/denote
+	url = https://gitlab.com/protesilaos/denote
