@@ -13,6 +13,8 @@
 	 ("C-c d r" . denote-dired-rename-file))
   :init
   (setq denote-directory (expand-file-name "~/notesdb/"))
+    (require 'denote-silo-extras)
+    (setq denote-silo-extras-directories '("~/hugo-blog/"))
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
 
@@ -327,6 +329,17 @@ Else create a new file."
 (load "gendoxy.el")
 
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init
+  (setq markdown-command "pandoc -t html5 -f gfm  --embed-resources --standalone --mathjax --quiet --highlight-style=zenburn --template github.html5")
+  (setq markdown-asymmetric-header t) ;; 默认使用命令插入标题会在左右两侧对称加上#标记，设置为true，则只会在左侧有标记
+  )
+
+
+
+
 ;; 支持直接复制图片到emacs buffer，图片自动保持到buffer文件的相对目录 ./img/目录下
 (if (eq system-type 'windows-nt)
     (progn
@@ -334,5 +347,10 @@ Else create a new file."
   (require 'pasteex-mode)
   (global-set-key (kbd "C-x p i") 'pasteex-image)
   )
-)
+  )
+
+;; 解决ripgrep搜索不了中文
+;; see @https://emacs-china.org/t/emacs-utf-8/21143/3
+(add-to-list 'process-coding-system-alist 
+                        '("[rR][gG]" . (utf-8 . gbk-dos)))
 (provide 'setup-extra)
