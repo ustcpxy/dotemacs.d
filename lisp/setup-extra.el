@@ -31,11 +31,22 @@
   (setq denote-known-keywords '("emacs" "entertainment" "reading" "studying"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
-  (setq denote-file-type nil) ; Org is the default, set others here
+  (setq denote-file-type 'markdown-yaml) ; Org is the default, set others here
   (setq denote-prompts '(title keywords))
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)
-
+  (setq denote-yaml-front-matter
+ "---
+title:      %s
+date:       %s
+lastmod: 
+tags:       %s
+categories: 
+draft:  false
+toc: true
+identifier: %S
+---\n\n"	)
+  
   ;; @https://gsj987.github.io/posts/take-note-with-denote/
   ;;; 配置目录结构，让其与 logseq 的兼容，这样就能通过 icloud 在移动端读取笔记
   (setq denote-journal-home (expand-file-name "journals/" denote-directory))

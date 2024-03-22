@@ -379,10 +379,17 @@ object (e.g., within a comment).  In these case, you need to use
     (goto-char (point-max))
     (save-buffer)))
 
+;; for orgmode notes
+;; (setq time-stamp-active t
+;;       time-stamp-start "^#\\+lastmod: [ \t]*"
+;;       time-stamp-end "$"
+;;       time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+
+;; for markdown-yaml notes
 (setq time-stamp-active t
-      time-stamp-start "^#\\+lastmod: [ \t]*"
+      time-stamp-start "^lastmod: "
       time-stamp-end "$"
-      time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+      time-stamp-format "%Y-%02m-%02dT%02H:%02M:%02S%5z")
 (add-hook 'before-save-hook 'time-stamp nil)
 
 (defun my/search-random-someday ()
