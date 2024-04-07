@@ -14,7 +14,7 @@
   :init
   (setq denote-directory (expand-file-name "~/notesdb/"))
     (require 'denote-silo-extras)
-    (setq denote-silo-extras-directories '("~/hugo-blog/"))
+    (setq denote-silo-extras-directories '("~/hugo-blog/content/posts/"))
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
 
