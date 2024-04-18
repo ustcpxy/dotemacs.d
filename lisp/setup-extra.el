@@ -27,7 +27,10 @@
                    :kill-buffer t
                    :jump-to-captured t)))
   :config
-
+(setq denote-file-name-slug-functions
+      '((title . denote-sluggify-title)
+        (keyword . identity)
+        (signature . denote-sluggify-signature)))
   (setq denote-known-keywords '("emacs" "entertainment" "reading" "studying"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
@@ -135,6 +138,7 @@ entries exist, prompt with completion for a choice between them.
 Else create a new file."
     (interactive)
     (let* ((denote-directory denote-note-home)
+	   (denote-file-type 'org) ;; 使用org格式
 	   (week (format-time-string "%Y Week%W"))
 	   (string (denote-sluggify-title week))
 	   (files (denote-directory-files-matching-regexp string)))
