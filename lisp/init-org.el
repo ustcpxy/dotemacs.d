@@ -25,7 +25,7 @@
   :config
   (require 'ox-ioslide)
   ;; To speed up startup, don't put to init section
-  (setq org-directory "/home/derek/pkms/gtd/")
+  (setq org-directory "~/pkms/gtd/")
 
   ;; having the time a item is done sounds convininet
   (setq org-log-done 'time)

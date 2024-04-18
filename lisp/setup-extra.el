@@ -136,7 +136,7 @@ Else create a new file."
     (interactive)
     (let* ((denote-directory denote-note-home)
 	   (week (format-time-string "%Y Week%W"))
-	   (string (denote-sluggify week))
+	   (string (denote-sluggify-title week))
 	   (files (denote-directory-files-matching-regexp string)))
       (cond
        ((> (length files) 1)
@@ -363,5 +363,8 @@ Else create a new file."
 ;; 解决ripgrep搜索不了中文
 ;; see @https://emacs-china.org/t/emacs-utf-8/21143/3
 (add-to-list 'process-coding-system-alist 
-                        '("[rR][gG]" . (utf-8 . gbk-dos)))
+             '("[rR][gG]" . (utf-8 . gbk-dos)))
+
+(setq project-vc-extra-root-markers '(".project"))
+
 (provide 'setup-extra)
