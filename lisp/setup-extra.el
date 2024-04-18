@@ -358,16 +358,18 @@ Else create a new file."
 ;; 支持直接复制图片到emacs buffer，图片自动保持到buffer文件的相对目录 ./img/目录下
 (if (eq system-type 'windows-nt)
     (progn
-    (setq pasteex-executable-path (expand-file-name "~/PasteEx/PasteEx.exe"))
-  (require 'pasteex-mode)
-  (global-set-key (kbd "C-x p i") 'pasteex-image)
-  )
+      (setq pasteex-executable-path (expand-file-name "~/PasteEx/PasteEx.exe"))
+      (require 'pasteex-mode)
+      (global-set-key (kbd "C-x p i") 'pasteex-image)
+
+      ;; 解决ripgrep搜索不了中文
+      ;; see @https://emacs-china.org/t/emacs-utf-8/21143/3
+      (add-to-list 'process-coding-system-alist 
+               '("[rR][gG]" . (utf-8 . gbk-dos)))
+      )
   )
 
-;; 解决ripgrep搜索不了中文
-;; see @https://emacs-china.org/t/emacs-utf-8/21143/3
-(add-to-list 'process-coding-system-alist 
-             '("[rR][gG]" . (utf-8 . gbk-dos)))
+
 
 (setq project-vc-extra-root-markers '(".project"))
 
