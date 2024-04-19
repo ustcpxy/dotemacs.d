@@ -77,6 +77,7 @@
   ;; `completion-at-point' is often bound to M-TAB.
   (setq tab-always-indent 'complete))
 
+
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :init
@@ -85,7 +86,13 @@
   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+        completion-category-overrides '((file (styles partial-completion))))
+  :config
+  ;; see @https://emacs-china.org/t/vertico/17913/2
+  (defun completion--regex-pinyin (str)
+    (orderless-regexp (pinyinlib-build-regexp-string str)))
+  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
+  )
 
 (use-package marginalia
   :ensure t
