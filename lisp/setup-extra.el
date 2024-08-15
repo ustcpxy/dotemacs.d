@@ -303,19 +303,19 @@ Else create a new file."
    (put cmd 'repeat-map 'structural-edit-map))
  structural-edit-map)
 
-;; (use-package apheleia
-;;   :ensure t
-;;   :init
-;;   (apheleia-global-mode +1)
+(use-package apheleia
+  :ensure t
+  :init
+  (apheleia-global-mode +1)
 
-;;   :hook
-;;   (prog-mode . apheleia-mode)
-;;   :config
-;;                    (setf (alist-get 'clang-format apheleia-formatters)
-;;         '("git" "clang-format" "--force" "--quiet" (buffer-file-name)))
+  :hook
+  (prog-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'clang-format apheleia-formatters)
+        '("git" "clang-format" "--force" "--quiet" (buffer-file-name)))
   
-;;   (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
-;;   )
+  (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
+  )
 
 ;; (use-package yasnippet
 ;;   :ensure t

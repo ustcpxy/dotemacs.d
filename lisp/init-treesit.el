@@ -38,17 +38,17 @@
         (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
         (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
 
-(setq major-mode-remap-alist
-      '((c-mode          . c-ts-mode)
-        (c++-mode        . c++-ts-mode)
-        (cmake-mode      . cmake-ts-mode)
-        (conf-toml-mode  . toml-ts-mode)
-        (css-mode        . css-ts-mode)
-        (js-mode         . js-ts-mode)
-        (js-json-mode    . json-ts-mode)
-        (python-mode     . python-ts-mode)
-        (sh-mode         . bash-ts-mode)
-        (typescript-mode . typescript-ts-mode)))
+;; (setq major-mode-remap-alist
+;;       '((c-mode          . c-ts-mode)
+;;         (c++-mode        . c++-ts-mode)
+;;         (cmake-mode      . cmake-ts-mode)
+;;         (conf-toml-mode  . toml-ts-mode)
+;;         (css-mode        . css-ts-mode)
+;;         (js-mode         . js-ts-mode)
+;;         (js-json-mode    . json-ts-mode)
+;;         (python-mode     . python-ts-mode)
+;;         (sh-mode         . bash-ts-mode)
+;;         (typescript-mode . typescript-ts-mode)))
 
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (treesit-parser-create 'elisp)))
 
