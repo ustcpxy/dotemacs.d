@@ -13,8 +13,8 @@
 	 ("C-c d r" . denote-dired-rename-file))
   :init
   (setq denote-directory (expand-file-name "~/notesdb/"))
-    (require 'denote-silo-extras)
-    (setq denote-silo-extras-directories '("~/hugo-blog/content/posts/"))
+  (require 'denote-silo-extras)
+  (setq denote-silo-extras-directories '("~/hugo-blog/content/posts/"))
   (with-eval-after-load 'org-capture
     (setq denote-org-capture-specifiers "%l\n%i\n%?")
 
@@ -27,10 +27,10 @@
                    :kill-buffer t
                    :jump-to-captured t)))
   :config
-(setq denote-file-name-slug-functions
-      '((title . denote-sluggify-title)
-        (keyword . identity)
-        (signature . denote-sluggify-signature)))
+  (setq denote-file-name-slug-functions
+	'((title . denote-sluggify-title)
+          (keyword . identity)
+          (signature . denote-sluggify-signature)))
   (setq denote-known-keywords '("emacs" "entertainment" "reading" "studying"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
@@ -39,7 +39,7 @@
   (setq denote-excluded-directories-regexp nil)
   (setq denote-excluded-keywords-regexp nil)
   (setq denote-yaml-front-matter
- "---
+	"---
 title:      %s
 date:       %s
 lastmod: 
@@ -336,8 +336,8 @@ Else create a new file."
 
   :config
   (defun my/autoinsert-yas-expand()
-  "Replace text in yasnippet template."
-  (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+    "Replace text in yasnippet template."
+    (yas-expand-snippet (buffer-string) (point-min) (point-max)))
   
   (define-auto-insert "\\.c?$" ["default-c.c" my/autoinsert-yas-expand]))
 
@@ -365,12 +365,11 @@ Else create a new file."
       ;; 解决ripgrep搜索不了中文
       ;; see @https://emacs-china.org/t/emacs-utf-8/21143/3
       (add-to-list 'process-coding-system-alist 
-               '("[rR][gG]" . (utf-8 . gbk-dos)))
+		   '("[rR][gG]" . (utf-8 . gbk-dos)))
       )
   )
 
 
-
-(setq project-vc-extra-root-markers '(".project"))
+(setq project-vc-merge-submodules nil)
 
 (provide 'setup-extra)
